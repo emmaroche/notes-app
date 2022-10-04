@@ -1,5 +1,6 @@
 # notes-app
--Added a menu
--Refactored the menu code
--Inputted mismatch exceptions
--Added logging support
+# V1
+- Added a menu
+- Refactored the menu code
+- Inputted mismatch exceptions
+- Added logging support

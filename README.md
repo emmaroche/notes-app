@@ -7,3 +7,9 @@ In this app, you will be able to search notes by category, priority, etc as well
 - Refactored the menu code
 - Inputted mismatch exceptions
 - Added logging support
+# V2 additions
+- Add a new note functionality
+- List all notes functionality
+- List all active notes functionality
+- List all archived notes functionality
+- Added tests for all of the above

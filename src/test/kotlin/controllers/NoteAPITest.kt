@@ -99,7 +99,7 @@ class NoteAPITest {
 
         @Test
         fun `listActiveNotes returns active notes when ArrayList has active notes stored`() {
-            assertEquals(3, populatedNotes!!.numberOfActiveNotes())
+            assertEquals(5, populatedNotes!!.numberOfActiveNotes())
             val activeNotesString = populatedNotes!!.listActiveNotes().lowercase()
             assertTrue(activeNotesString.contains("learning kotlin"))
             Assertions.assertFalse(activeNotesString.contains("code app"))
@@ -188,6 +188,31 @@ class NoteAPITest {
             assertEquals(3, populatedNotes!!.numberOfNotes())
         }
     }
+
+
+    @Nested
+    inner class ArchiveNotes {
+        @Test
+        fun `archiving a note that does not exist returns false`() {
+            assertFalse(populatedNotes!!.archiveNote(6))
+            assertFalse(populatedNotes!!.archiveNote(-1))
+            assertFalse(emptyNotes!!.archiveNote(0))
+        }
+
+        @Test
+        fun `archiving an already archived note returns false`() {
+            assertTrue(populatedNotes!!.findNote(2)!!.isNoteArchived)
+            assertFalse(populatedNotes!!.archiveNote(2))
+        }
+
+        @Test
+        fun `archiving an active note that exists returns true and archives`() {
+            assertFalse(populatedNotes!!.findNote(1)!!.isNoteArchived)
+            assertTrue(populatedNotes!!.archiveNote(1))
+            assertTrue(populatedNotes!!.findNote(1)!!.isNoteArchived)
+        }
+    }
+
 
     @Nested
     inner class UpdateNotes {

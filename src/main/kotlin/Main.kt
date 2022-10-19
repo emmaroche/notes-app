@@ -10,7 +10,8 @@ import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
 import java.io.File
 
-private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
+//private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
+private val noteAPI = NoteAPI(JSONSerializer(File("notes.json")))
 private val logger = KotlinLogging.logger {}
 fun main(args: Array<String>) {
     runMenu()
@@ -40,8 +41,8 @@ fun runMenu() {
             2  -> listNotes()
             3  -> updateNote()
             4  -> deleteNote()
-            4  -> save()
-            4  -> load()
+            5  -> save()
+            6  -> load()
             0  -> exitApp()
             else -> println("Invalid option entered: $option")
         }

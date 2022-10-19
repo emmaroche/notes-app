@@ -13,3 +13,9 @@ In this app, you will be able to search notes by category, priority, etc as well
 - List all active notes functionality
 - List all archived notes functionality
 - Added tests for all of the above
+# V3 additions
+- Add functionality to update a note
+- Add functionality to delete a note
+- Add functionality to persist to JSON or XML
+- Add functionality to archive a note
+- Add a submenu for the list functionality

@@ -20,6 +20,6 @@ In this app, you will be able to search notes by category, priority, etc as well
 -  Functionality to archive a note
 -  Added a submenu for the list functionality
 -  Functionality to search a note by description
-- Refactoring numberOf and all list functions to use Lambdas
-- Refactoring the joinString code so that it is in a helper function
+- Refactored numberOf and all list functions to use Lambdas
+- Refactored the joinString code so that it is in a helper function
 - Added JUnit tests for all new functionality added to the NoteAPI class

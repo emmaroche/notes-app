@@ -12,10 +12,14 @@ In this app, you will be able to search notes by category, priority, etc as well
 - List all notes functionality
 - List all active notes functionality
 - List all archived notes functionality
-- Added tests for all of the above
+- Added JUnit tests for all of the above
 # V3 additions
-- Add functionality to update a note
-- Add functionality to delete a note
-- Add functionality to persist to JSON or XML
-- Add functionality to archive a note
-- Add a submenu for the list functionality
+-  Functionality to update a note
+-  Functionality to delete a note
+-  Functionality to persist to JSON or XML
+-  Functionality to archive a note
+-  Added a submenu for the list functionality
+-  Functionality to search a note by description
+- Refactoring numberOf and all list functions to use Lambdas
+- Refactoring the joinString code so that it is in a helper function
+- Added JUnit tests for all new functionality added to the NoteAPI class

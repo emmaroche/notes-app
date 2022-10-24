@@ -80,15 +80,6 @@ class NoteAPI (serializerType: Serializer) {
             .toInt()
     }
 
-    //utility method to determine if an index is valid in a list.
-    fun isValidListIndex(index: Int, list: List<Any>): Boolean {
-        return (index >= 0 && index < list.size)
-    }
-
-    fun isValidIndex(index: Int) :Boolean{
-        return isValidListIndex(index, notes);
-    }
-
     fun deleteNote(indexToDelete: Int): Note? {
         return if (isValidListIndex(indexToDelete, notes)) {
             notes.removeAt(indexToDelete)
@@ -120,6 +111,22 @@ class NoteAPI (serializerType: Serializer) {
             }
         }
         return false
+    }
+
+    fun searchByTitle(searchString : String) =
+        notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true) }
+            .joinToString (separator = "\n")
+            {note -> notes.indexOf(note).toString() + ": " + note.toString()}
+
+
+
+    //utility method to determine if an index is valid in a list.
+    fun isValidListIndex(index: Int, list: List<Any>): Boolean {
+        return (index >= 0 && index < list.size)
+    }
+
+    fun isValidIndex(index: Int) :Boolean{
+        return isValidListIndex(index, notes)
     }
 
     @Throws(Exception::class)

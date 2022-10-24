@@ -43,7 +43,7 @@ fun runMenu() {
             5  -> archiveNote()
             6  -> save()
             7  -> load()
-            8  -> searchNote()
+            8  -> searchNotes()
             0  -> exitApp()
             else -> println("Invalid option entered: ${option}")
         }
@@ -150,7 +150,7 @@ fun deleteNote(){
     }
 }
 
-fun searchNote() {
+fun searchNotes() {
     val searchTitle = readNextLine("Enter the description to search by: ")
     val searchResults = noteAPI.searchByTitle(searchTitle)
     if (searchResults.isEmpty()) {

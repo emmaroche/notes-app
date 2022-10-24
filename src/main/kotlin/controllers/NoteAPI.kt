@@ -40,29 +40,22 @@ class NoteAPI (serializerType: Serializer) {
         }
     }
 
-    fun listArchivedNotes(): String {
-        return if (numberOfArchivedNotes() == 0) {
-            "No archived notes stored"
-        } else {
-            var listOfArchivedNotes = ""
-            for (note in notes) {
-                if (note.isNoteArchived) {
-                    listOfArchivedNotes += "${notes.indexOf(note)}: $note \n"
-                }
-            }
-            listOfArchivedNotes
-        }
+    fun numberOfActiveNotes(): Int {
+        return notes.stream()
+            .filter{note: Note -> !note.isNoteArchived}
+            .count()
+            .toInt()
     }
+
+    fun listArchivedNotes(): String =
+        if  (numberOfArchivedNotes() == 0) "No archived notes stored"
+        else notes.filter{note -> note.isNoteArchived }
+            .joinToString (separator = "\n") { note ->
+            notes.indexOf(note).toString() + ": " + note.toString() }
 
     fun numberOfArchivedNotes(): Int {
         return notes.stream()
             .filter{note: Note -> note.isNoteArchived}
-            .count()
-            .toInt()
-    }
-    fun numberOfActiveNotes(): Int {
-        return notes.stream()
-            .filter{note: Note -> !note.isNoteArchived}
             .count()
             .toInt()
     }
@@ -86,6 +79,7 @@ class NoteAPI (serializerType: Serializer) {
             }
         }
     }
+
 
     fun numberOfNotesByPriority(priority: Int): Int {
         return notes.stream()

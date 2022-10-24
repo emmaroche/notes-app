@@ -10,7 +10,7 @@
       <noteTitle>Swim - Pool</noteTitle>
       <notePriority>3</notePriority>
       <noteCategory>Hobby</noteCategory>
-      <isNoteArchived>false</isNoteArchived>
+      <isNoteArchived>true</isNoteArchived>
     </models.Note>
     <models.Note>
       <noteTitle>Summer Holiday to France</noteTitle>

@@ -1,11 +1,8 @@
 import controllers.NoteAPI
 import models.Note
 import mu.KotlinLogging
-import persistence.XMLSerializer
-import persistence.Serializer
 import persistence.JSONSerializer
 import java.lang.System.exit
-import utils.ScannerInput
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
 import java.io.File
@@ -17,11 +14,11 @@ fun main(args: Array<String>) {
     runMenu()
 }
 fun mainMenu() : Int {
-    return ScannerInput.readNextInt(""" 
+    return readNextInt(""" 
          > ----------------------------------
          > |        NOTE KEEPER APP         |
          > ----------------------------------
-         > | NOTE MENU!                      |
+         > | NOTE MENU!!                    |
          > |   1) Add a note                |
          > |   2) List all notes            |
          > |   3) Update a note             |
@@ -46,7 +43,7 @@ fun runMenu() {
             6  -> save()
             7  -> load()
             0  -> exitApp()
-            else -> println("Invalid option entered: $option")
+            else -> println("Invalid option entered: ${option}")
         }
     } while (true)
 }
@@ -75,9 +72,9 @@ fun listNotes() {
          > ==>> """.trimMargin(">"))
 
         when (option) {
-            1 -> listAllNotes();
-            2 -> listActiveNotes();
-            3 -> listArchivedNotes();
+            1 -> listAllNotes()
+            2 -> listActiveNotes()
+            3 -> listArchivedNotes()
             else -> println("Invalid option entered: " + option);
         }
     } else {

@@ -52,9 +52,10 @@ fun runMenu() {
 fun addNote(){
     //logger.info { "addNote() function invoked" }
     val noteTitle = readNextLine("Enter a title for the note: ")
+    val noteProgress = readNextLine("Enter progress (To do, doing, done): ")
     val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
     val noteCategory = readNextLine("Enter a category for the note: ")
-    val isAdded = noteAPI.add(Note(noteTitle, notePriority, noteCategory, false))
+    val isAdded = noteAPI.add(Note(noteTitle, notePriority, noteCategory, noteProgress ,false))
 
     if (isAdded) {
         println("Added Successfully")
@@ -73,10 +74,12 @@ fun listNotes() {
                   > --------------------------------
          > ==>> """.trimMargin(">"))
 
+
         when (option) {
             1 -> listAllNotes()
             2 -> listActiveNotes()
             3 -> listArchivedNotes()
+            4 -> searchBySelectedPriority()
             else -> println("Invalid option entered: " + option);
         }
     } else {
@@ -84,6 +87,19 @@ fun listNotes() {
     }
 }
 
+
+fun searchBySelectedPriority() {
+    val searchSelectedPriority = readNextInt("Enter the priority to search by: ")
+    val searchResults = noteAPI.listNotesBySelectedPriority(searchSelectedPriority)
+    if (searchResults.isEmpty()) {
+        println("No notes found")
+    } else {
+        println(searchResults)
+    }
+}
+fun listNotesBySelectedPriority(priority: Int){
+    println(noteAPI.listNotesBySelectedPriority(priority))
+}
 
 fun listAllNotes() {
     println(noteAPI.listAllNotes())
@@ -105,11 +121,12 @@ fun updateNote() {
         val indexToUpdate = readNextInt("Enter the index of the note to update: ")
         if (noteAPI.isValidIndex(indexToUpdate)) {
             val noteTitle = readNextLine("Enter a title for the note: ")
+            val noteProgress = readNextLine("Enter progress (To do, doing, done): ")
             val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
             val noteCategory = readNextLine("Enter a category for the note: ")
 
             //pass the index of the note and the new note details to NoteAPI for updating and check for success.
-            if (noteAPI.updateNote(indexToUpdate, Note(noteTitle, notePriority, noteCategory, false))){
+            if (noteAPI.updateNote(indexToUpdate, Note(noteTitle, notePriority, noteProgress, noteCategory, false))){
                 println("Update Successful")
             } else {
                 println("Update Failed")

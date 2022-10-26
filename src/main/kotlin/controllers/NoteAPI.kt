@@ -43,7 +43,9 @@ class NoteAPI (serializerType: Serializer) {
         }
 
     fun numberOfArchivedNotes(): Int = notes.count { note: Note -> note.isNoteArchived }
+
     fun numberOfActiveNotes(): Int = notes.count { note: Note -> !note.isNoteArchived }
+
     fun numberOfNotesByPriority(priority: Int): Int = notes.count { note: Note -> note.notePriority == priority }
 
     fun deleteNote(indexToDelete: Int): Note? {
@@ -107,5 +109,7 @@ class NoteAPI (serializerType: Serializer) {
     fun store() {
         serializer.write(notes)
     }
+
+
 
 }

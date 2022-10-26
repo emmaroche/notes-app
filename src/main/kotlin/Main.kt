@@ -52,10 +52,10 @@ fun runMenu() {
 fun addNote(){
     //logger.info { "addNote() function invoked" }
     val noteTitle = readNextLine("Enter a title for the note: ")
-    val noteProgress = readNextLine("Enter progress (To do, doing, done): ")
-    val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
     val noteCategory = readNextLine("Enter a category for the note: ")
-    val isAdded = noteAPI.add(Note(noteTitle, notePriority, noteCategory, noteProgress ,false))
+    val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
+    val noteProgress = readNextLine("Enter progress (To-do, doing, done): ")
+    val isAdded = noteAPI.add(Note(noteTitle,noteCategory, notePriority ,noteProgress, false))
 
     if (isAdded) {
         println("Added Successfully")
@@ -121,12 +121,14 @@ fun updateNote() {
         val indexToUpdate = readNextInt("Enter the index of the note to update: ")
         if (noteAPI.isValidIndex(indexToUpdate)) {
             val noteTitle = readNextLine("Enter a title for the note: ")
-            val noteProgress = readNextLine("Enter progress (To do, doing, done): ")
-            val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
             val noteCategory = readNextLine("Enter a category for the note: ")
+            val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
+            val noteProgress = readNextLine("Enter progress (To-do, doing, done): ")
+
+
 
             //pass the index of the note and the new note details to NoteAPI for updating and check for success.
-            if (noteAPI.updateNote(indexToUpdate, Note(noteTitle, notePriority, noteProgress, noteCategory, false))){
+            if (noteAPI.updateNote(indexToUpdate, Note(noteTitle,noteCategory, notePriority, noteProgress, false))){
                 println("Update Successful")
             } else {
                 println("Update Failed")

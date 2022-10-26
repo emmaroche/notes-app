@@ -2,20 +2,23 @@
   <list>
     <models.Note>
       <noteTitle>Test App</noteTitle>
-      <notePriority>4</notePriority>
       <noteCategory>Work</noteCategory>
+      <notePriority>4</notePriority>
+      <noteProgress>To-do</noteProgress>
       <isNoteArchived>false</isNoteArchived>
     </models.Note>
     <models.Note>
       <noteTitle>Swim - Pool</noteTitle>
-      <notePriority>3</notePriority>
       <noteCategory>Hobby</noteCategory>
+      <notePriority>3</notePriority>
+      <noteProgress>Doing</noteProgress>
       <isNoteArchived>true</isNoteArchived>
     </models.Note>
     <models.Note>
       <noteTitle>Summer Holiday to France</noteTitle>
-      <notePriority>1</notePriority>
       <noteCategory>Holiday</noteCategory>
+      <notePriority>1</notePriority>
+      <noteProgress>Done</noteProgress>
       <isNoteArchived>false</isNoteArchived>
     </models.Note>
   </list>

@@ -52,10 +52,11 @@ fun runMenu() {
 fun addNote(){
     //logger.info { "addNote() function invoked" }
     val noteTitle = readNextLine("Enter a title for the note: ")
+    val noteContents = readNextLine("Enter contents for the note: ")
     val noteCategory = readNextLine("Enter a category for the note: ")
     val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
     val noteProgress = readNextLine("Enter progress (To-do, doing, done): ")
-    val isAdded = noteAPI.add(Note(noteTitle,noteCategory, notePriority ,noteProgress, false))
+    val isAdded = noteAPI.add(Note(noteTitle, noteContents, noteCategory, notePriority ,noteProgress, false))
 
     if (isAdded) {
         println("Added Successfully")
@@ -80,10 +81,10 @@ fun listNotes() {
             2 -> listActiveNotes()
             3 -> listArchivedNotes()
             4 -> searchBySelectedPriority()
-            else -> println("Invalid option entered: " + option);
+            else -> println("Invalid option entered: " + option)
         }
     } else {
-        println("Option Invalid - No notes stored");
+        println("Option Invalid - No notes stored")
     }
 }
 
@@ -121,14 +122,13 @@ fun updateNote() {
         val indexToUpdate = readNextInt("Enter the index of the note to update: ")
         if (noteAPI.isValidIndex(indexToUpdate)) {
             val noteTitle = readNextLine("Enter a title for the note: ")
+            val noteContents = readNextLine("Enter contents for the note: ")
             val noteCategory = readNextLine("Enter a category for the note: ")
             val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
             val noteProgress = readNextLine("Enter progress (To-do, doing, done): ")
 
-
-
             //pass the index of the note and the new note details to NoteAPI for updating and check for success.
-            if (noteAPI.updateNote(indexToUpdate, Note(noteTitle,noteCategory, notePriority, noteProgress, false))){
+            if (noteAPI.updateNote(indexToUpdate, Note(noteTitle, noteContents, noteCategory, notePriority, noteProgress, false))){
                 println("Update Successful")
             } else {
                 println("Update Failed")

@@ -3,8 +3,12 @@ import models.Note
 import mu.KotlinLogging
 import persistence.JSONSerializer
 import java.lang.System.exit
+import utils.CategoryUtility
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
+import utils.ValidateInput.readValidCategory
+import utils.ValidateInput.readValidPriority
+import utils.ValidateInput.readValidProgress
 import java.io.File
 
 //private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
@@ -53,9 +57,9 @@ fun addNote(){
     //logger.info { "addNote() function invoked" }
     val noteTitle = readNextLine("Enter a title for the note: ")
     val noteContents = readNextLine("Enter contents for the note: ")
-    val noteCategory = readNextLine("Enter a category for the note: ")
-    val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
-    val noteProgress = readNextLine("Enter progress (To-do, doing, done): ")
+    val noteCategory = readValidCategory("Enter a category for the note from ${CategoryUtility.categories}: ")
+    val notePriority = readValidPriority("Enter a priority (1-low, 2, 3, 4, 5-high): ")
+    val noteProgress = readValidProgress("Enter progress (To-do, doing, done): ")
     val isAdded = noteAPI.add(Note(noteTitle, noteContents, noteCategory, notePriority ,noteProgress, false))
 
     if (isAdded) {
@@ -98,9 +102,9 @@ fun searchBySelectedPriority() {
         println(searchResults)
     }
 }
-fun listNotesBySelectedPriority(priority: Int){
-    println(noteAPI.listNotesBySelectedPriority(priority))
-}
+//fun listNotesBySelectedPriority(priority: Int){
+//    println(noteAPI.listNotesBySelectedPriority(priority))
+//}
 
 fun listAllNotes() {
     println(noteAPI.listAllNotes())
@@ -123,9 +127,9 @@ fun updateNote() {
         if (noteAPI.isValidIndex(indexToUpdate)) {
             val noteTitle = readNextLine("Enter a title for the note: ")
             val noteContents = readNextLine("Enter contents for the note: ")
-            val noteCategory = readNextLine("Enter a category for the note: ")
-            val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
-            val noteProgress = readNextLine("Enter progress (To-do, doing, done): ")
+            val noteCategory = readValidCategory("Enter a category for the note from ${CategoryUtility.categories}: ")
+            val notePriority = readValidPriority("Enter a priority (1-low, 2, 3, 4, 5-high): ")
+            val noteProgress = readValidProgress("Enter progress (To-do, doing, done): ")
 
             //pass the index of the note and the new note details to NoteAPI for updating and check for success.
             if (noteAPI.updateNote(indexToUpdate, Note(noteTitle, noteContents, noteCategory, notePriority, noteProgress, false))){

@@ -2,6 +2,7 @@
   <list>
     <models.Note>
       <noteTitle>Test App</noteTitle>
+      <noteContents>Test the app is working as expected</noteContents>
       <noteCategory>Work</noteCategory>
       <notePriority>4</notePriority>
       <noteProgress>To-do</noteProgress>
@@ -9,6 +10,7 @@
     </models.Note>
     <models.Note>
       <noteTitle>Swim - Pool</noteTitle>
+      <noteContents>Go for a swim</noteContents>
       <noteCategory>Hobby</noteCategory>
       <notePriority>3</notePriority>
       <noteProgress>Doing</noteProgress>
@@ -16,6 +18,7 @@
     </models.Note>
     <models.Note>
       <noteTitle>Summer Holiday to France</noteTitle>
+      <noteContents>Go on holiday to france</noteContents>
       <noteCategory>Holiday</noteCategory>
       <notePriority>1</notePriority>
       <noteProgress>Done</noteProgress>

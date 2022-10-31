@@ -30,6 +30,9 @@ class NoteAPI (serializerType: Serializer) {
         if  (numberOfActiveNotes() == 0)  "No active notes stored"
         else formatListString(notes.filter { note -> !note.isNoteArchived})
 
+    fun listActiveNotesInAlphabeticalOrderOfTitle(): String =
+        if  (numberOfActiveNotes() == 0)  "No active notes stored"
+        else formatListString(notes.sortedBy { note -> note.noteTitle})
 
     fun listArchivedNotes(): String =
         if  (numberOfArchivedNotes() == 0) "No archived notes stored"
@@ -43,11 +46,21 @@ class NoteAPI (serializerType: Serializer) {
             else "${numberOfNotesByPriority(priority)} notes with priority $priority: $listOfNotes"
         }
 
+    fun listNotesBySelectedProgress(progress: String): String =
+        if (notes.isEmpty()) "No notes stored"
+        else {
+            val listOfNotes = formatListString(notes.filter{ note -> note.noteProgress == progress})
+            if (listOfNotes.equals("")) "No notes with progress: $progress"
+            else "${numberOfNotesByProgress(progress)} notes with progress $progress: $listOfNotes"
+        }
+
     fun numberOfArchivedNotes(): Int = notes.count { note: Note -> note.isNoteArchived }
 
     fun numberOfActiveNotes(): Int = notes.count { note: Note -> !note.isNoteArchived }
 
     fun numberOfNotesByPriority(priority: Int): Int = notes.count { note: Note -> note.notePriority == priority }
+
+    fun numberOfNotesByProgress(progress: String): Int = notes.count { note: Note -> note.noteProgress == progress }
 
     fun deleteNote(indexToDelete: Int): Note? {
         return if (isValidListIndex(indexToDelete, notes)) {

@@ -58,8 +58,8 @@ fun addNote(){
     val noteTitle = readNextLine("Enter a title for the note: ")
     val noteContents = readNextLine("Enter contents for the note: ")
     val noteCategory = readValidCategory("Enter a category for the note from ${CategoryUtility.categories}: ")
-    val notePriority = readValidPriority("Enter a priority (1-low, 2, 3, 4, 5-high): ")
-    val noteProgress = readValidProgress("Enter progress (To-do, doing, done): ")
+    val notePriority = readValidPriority("Enter note priority (1-low, 2, 3, 4, 5-high): ")
+    val noteProgress = readValidProgress("Enter note progress (To-do, doing, done): ")
     val isAdded = noteAPI.add(Note(noteTitle, noteContents, noteCategory, notePriority ,noteProgress, false))
 
     if (isAdded) {
@@ -84,7 +84,9 @@ fun listNotes() {
             1 -> listAllNotes()
             2 -> listActiveNotes()
             3 -> listArchivedNotes()
-            4 -> searchBySelectedPriority()
+            4 -> listBySelectedPriority()
+            5 -> listBySelectedProgress()
+            6 -> listActiveNotesInAlphabeticalOrder()
             else -> println("Invalid option entered: " + option)
         }
     } else {
@@ -92,8 +94,8 @@ fun listNotes() {
     }
 }
 
-
-fun searchBySelectedPriority() {
+//List notes of the priority that was inputted
+fun listBySelectedPriority() {
     val searchSelectedPriority = readNextInt("Enter the priority to search by: ")
     val searchResults = noteAPI.listNotesBySelectedPriority(searchSelectedPriority)
     if (searchResults.isEmpty()) {
@@ -102,10 +104,21 @@ fun searchBySelectedPriority() {
         println(searchResults)
     }
 }
-//fun listNotesBySelectedPriority(priority: Int){
-//    println(noteAPI.listNotesBySelectedPriority(priority))
-//}
 
+//List notes of the progress that was inputted
+fun listBySelectedProgress() {
+    val searchSelectedProgress = readNextLine("Enter the progress to search by: ")
+    val searchResults = noteAPI.listNotesBySelectedProgress(searchSelectedProgress)
+    if (searchResults.isEmpty()) {
+        println("No notes found")
+    } else {
+        println(searchResults)
+    }
+}
+
+fun listActiveNotesInAlphabeticalOrder(){
+    println(noteAPI.listActiveNotesInAlphabeticalOrderOfTitle())
+}
 fun listAllNotes() {
     println(noteAPI.listAllNotes())
 }
@@ -128,8 +141,8 @@ fun updateNote() {
             val noteTitle = readNextLine("Enter a title for the note: ")
             val noteContents = readNextLine("Enter contents for the note: ")
             val noteCategory = readValidCategory("Enter a category for the note from ${CategoryUtility.categories}: ")
-            val notePriority = readValidPriority("Enter a priority (1-low, 2, 3, 4, 5-high): ")
-            val noteProgress = readValidProgress("Enter progress (To-do, doing, done): ")
+            val notePriority = readValidPriority("Enter note priority (1-low, 2, 3, 4, 5-high): ")
+            val noteProgress = readValidProgress("Enter note progress (To-do, doing, done): ")
 
             //pass the index of the note and the new note details to NoteAPI for updating and check for success.
             if (noteAPI.updateNote(indexToUpdate, Note(noteTitle, noteContents, noteCategory, notePriority, noteProgress, false))){
@@ -203,3 +216,4 @@ fun exitApp(){
     logger.info { "exitApp() function invoked" }
     exit(0)
 }
+

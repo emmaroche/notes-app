@@ -26,7 +26,7 @@ class NoteAPITest {
     @BeforeEach
     fun setup() {
         learnKotlin = Note("Learning Kotlin", "Learn new Kotlin code","College", 5,"To-do", false)
-        summerHoliday = Note("Summer Holiday to France","Go on holiday to france", "Holiday",1, "Done", false)
+        summerHoliday = Note("Summer Holiday to France","Go on holiday to france", "Holiday",1, "Doing", false)
         codeApp = Note("Code App", "This is a code app","Work",4, "Doing",  true)
         testApp = Note("Test App", "Test the app is working as expected","Work", 4, "To-do", false)
         swim = Note("Swim - Pool", "Go for a swim", "Hobby",3, "Doing",  true)
@@ -179,6 +179,26 @@ class NoteAPITest {
         }
 
         @Test
+        fun `listActiveNotesInAlphabeticalOrderOfTitle returns no active notes stored when ArrayList is empty`() {
+            assertEquals(0, emptyNotes!!.numberOfActiveNotes())
+            assertTrue(
+                emptyNotes!!.listActiveNotesInAlphabeticalOrderOfTitle().lowercase().contains("no active notes")
+            )
+        }
+
+        @Test
+        fun `listActiveNotesInAlphabeticalOrderOfTitle returns active notes when ArrayList has active notes stored`() {
+            assertEquals(3, populatedNotes!!.numberOfActiveNotes())
+            val AlphaActiveNotesString = populatedNotes!!.listActiveNotesInAlphabeticalOrderOfTitle().lowercase()
+            assertTrue(AlphaActiveNotesString.contains("learning kotlin"))
+            assertTrue(AlphaActiveNotesString.contains("code app"))
+            assertTrue(AlphaActiveNotesString.contains("summer holiday"))
+            assertTrue(AlphaActiveNotesString.contains("test app"))
+            assertTrue(AlphaActiveNotesString.contains("swim"))
+        }
+
+
+        @Test
         fun `listArchivedNotes returns no archived notes when ArrayList is empty`() {
             assertEquals(0, emptyNotes!!.numberOfArchivedNotes())
             assertTrue(
@@ -235,6 +255,39 @@ class NoteAPITest {
             assertTrue(priority4String.contains("test app"))
             assertFalse(priority4String.contains("learning kotlin"))
             assertFalse(priority4String.contains("summer holiday"))
+        }
+
+        @Test
+        fun `listNotesBySelectedProgress returns No Notes when ArrayList is empty`() {
+            assertEquals(0, emptyNotes!!.numberOfNotes())
+            assertTrue(
+                emptyNotes!!.listNotesBySelectedProgress("To-do").lowercase().contains("no notes")
+            )
+        }
+
+        @Test
+        fun `listNotesBySelectedProgress returns no notes when no notes of that progress exist`() {
+            assertEquals(5, populatedNotes!!.numberOfNotes())
+            val progressDoneString = populatedNotes!!.listNotesBySelectedProgress("Done").lowercase()
+            assertTrue(progressDoneString.contains("no notes"))
+
+        }
+
+        @Test
+        fun `listNotesBySelectedProgress returns all notes that match that progress when notes of that progress exist`() {
+            // Priority 1 (1 note), 2 (none), 3 (1 note). 4 (2 notes), 5 (1 note)
+            assertEquals(5, populatedNotes!!.numberOfNotes())
+            val progressDoingString = populatedNotes!!.listNotesBySelectedProgress("Doing").lowercase()
+            assertTrue(progressDoingString.contains("summer holiday"))
+            assertTrue(progressDoingString.contains("code app"))
+            assertFalse(progressDoingString.contains("test app"))
+
+
+            val progressToDoString = populatedNotes!!.listNotesBySelectedProgress("To-do").lowercase()
+            assertTrue(progressToDoString.contains("learning kotlin"))
+            assertFalse(progressToDoString.contains("swim"))
+
+
         }
     }
 
@@ -347,6 +400,14 @@ class NoteAPITest {
             assertEquals(2, populatedNotes!!.numberOfNotesByPriority(4))
             assertEquals(1, populatedNotes!!.numberOfNotesByPriority(5))
             assertEquals(0, emptyNotes!!.numberOfNotesByPriority(1))
+        }
+
+        @Test
+        fun numberOfNotesByProgressCalculatedCorrectly() {
+            assertEquals(2, populatedNotes!!.numberOfNotesByProgress("To-do"))
+            assertEquals(3, populatedNotes!!.numberOfNotesByProgress("Doing"))
+            assertEquals(0, populatedNotes!!.numberOfNotesByProgress("Done"))
+            assertEquals(0, emptyNotes!!.numberOfNotesByProgress("To-do"))
         }
     }
 

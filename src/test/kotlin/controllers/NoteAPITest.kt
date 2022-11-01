@@ -495,6 +495,72 @@ class NoteAPITest {
             assertFalse(searchResults.contains("Swim - Pool"))
         }
 
+        @Test
+        fun `search notes by contents returns no notes when no notes with that content exist`() {
+            // Searching a populated collection for contents that doesn't exist.
+            assertEquals(5, populatedNotes!!.numberOfNotes())
+            val searchResults = populatedNotes!!.searchByContent("no results expected")
+            assertTrue(searchResults.isEmpty())
+
+            // Searching an empty collection
+            assertEquals(0, emptyNotes!!.numberOfNotes())
+            assertTrue(emptyNotes!!.searchByTitle("").isEmpty())
+        }
+
+        @Test
+        fun `search notes by contents returns notes when notes with that content exist`() {
+            assertEquals(5, populatedNotes!!.numberOfNotes())
+
+            // Searching a populated collection for full contents that exists (case matches exactly)
+            var searchResults = populatedNotes!!.searchByContent("Code App")
+            assertTrue(searchResults.contains("Code App"))
+            assertFalse(searchResults.contains("Test App"))
+
+            // Searching a populated collection for partial contents that exists (case matches exactly)
+            searchResults = populatedNotes!!.searchByContent("App")
+            assertTrue(searchResults.contains("Code App"))
+            assertTrue(searchResults.contains("Test App"))
+            assertFalse(searchResults.contains("Swim - Pool"))
+
+            // Searching a populated collection for partial contents that exists (case doesn't match)
+            searchResults = populatedNotes!!.searchByContent("aPp")
+            assertTrue(searchResults.contains("Code App"))
+            assertTrue(searchResults.contains("Test App"))
+            assertFalse(searchResults.contains("Swim - Pool"))
+        }
+
+        @Test
+        fun `search notes by category returns no notes when no notes in that category exist`() {
+            // Searching a populated collection for contents that doesn't exist.
+            assertEquals(5, populatedNotes!!.numberOfNotes())
+            val searchResults = populatedNotes!!.searchByCategory("no results expected")
+            assertTrue(searchResults.isEmpty())
+
+            // Searching an empty collection
+            assertEquals(0, emptyNotes!!.numberOfNotes())
+            assertTrue(emptyNotes!!.searchByTitle("").isEmpty())
+        }
+
+        @Test
+        fun `search notes by category returns notes when notes in that category exist`() {
+            assertEquals(5, populatedNotes!!.numberOfNotes())
+
+            // Searching a populated collection for a full category that exists (case matches exactly)
+            var searchResults = populatedNotes!!.searchByCategory("Work")
+              assertTrue(searchResults.contains("Test App"))
+               assertTrue(searchResults.contains("Code App"))
+              assertFalse(searchResults.contains("Swim - Pool"))
+
+            // Searching a populated collection for a partial category that exists (case matches exactly)
+            searchResults = populatedNotes!!.searchByCategory("Holi")
+            assertTrue(searchResults.contains("Summer Holiday"))
+            assertFalse(searchResults.contains("Swim - Pool"))
+
+            // Searching a populated collection for a partial category that exists (case doesn't match)
+            searchResults = populatedNotes!!.searchByCategory("cOllege")
+            assertTrue(searchResults.contains("Learning Kotlin"))
+            assertFalse(searchResults.contains("Swim - Pool"))
+        }
 
     }
 

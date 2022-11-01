@@ -116,6 +116,14 @@ class NoteAPI (serializerType: Serializer) {
         formatListString(
             notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true) })
 
+    fun searchByContent (searchString : String) =
+        formatListString(
+            notes.filter { note -> note.noteContents.contains(searchString, ignoreCase = true) })
+
+    fun searchByCategory (searchString : String) =
+        formatListString(
+            notes.filter { note -> note.noteCategory.contains(searchString, ignoreCase = true) })
+
     fun isValidIndex(index: Int) :Boolean{
         return isValidListIndex(index, notes)
     }

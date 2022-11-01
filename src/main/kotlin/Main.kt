@@ -49,7 +49,9 @@ fun runMenu() {
             6  -> completeNote()
             7  -> save()
             8  -> load()
-            9  -> searchNotes()
+            9  -> searchNotesByTitle()
+            10  -> searchNotesByContents()
+            11  -> searchNotesByCategory()
             0  -> exitApp()
             else -> println("Invalid option entered: ${option}")
         }
@@ -99,7 +101,7 @@ fun listNotes() {
 
 //List notes of the priority that was inputted
 fun listBySelectedPriority() {
-    val searchSelectedPriority = readNextInt("Enter the priority to search by: ")
+    val searchSelectedPriority = readNextInt("Enter the note priority to list: ")
     val searchResults = noteAPI.listNotesBySelectedPriority(searchSelectedPriority)
     if (searchResults.isEmpty()) {
         println("No notes found")
@@ -110,7 +112,7 @@ fun listBySelectedPriority() {
 
 //List notes of the progress that was inputted
 fun listBySelectedProgress() {
-    val searchSelectedProgress = readNextLine("Enter the progress to search by: ")
+    val searchSelectedProgress = readNextLine("Enter the note progress to list: ")
     val searchResults = noteAPI.listNotesBySelectedProgress(searchSelectedProgress)
     if (searchResults.isEmpty()) {
         println("No notes found")
@@ -207,9 +209,29 @@ fun deleteNote(){
     }
 }
 
-fun searchNotes() {
-    val searchTitle = readNextLine("Enter the description to search by: ")
+fun searchNotesByTitle() {
+    val searchTitle = readNextLine("Enter the title to search by: ")
     val searchResults = noteAPI.searchByTitle(searchTitle)
+    if (searchResults.isEmpty()) {
+        println("No notes found")
+    } else {
+        println(searchResults)
+    }
+}
+
+fun searchNotesByContents() {
+    val searchTitle = readNextLine("Enter contents to search by: ")
+    val searchResults = noteAPI.searchByContent(searchTitle)
+    if (searchResults.isEmpty()) {
+        println("No notes found")
+    } else {
+        println(searchResults)
+    }
+}
+
+fun searchNotesByCategory() {
+    val searchTitle = readNextLine("Enter the category to search by: ")
+    val searchResults = noteAPI.searchByCategory(searchTitle)
     if (searchResults.isEmpty()) {
         println("No notes found")
     } else {

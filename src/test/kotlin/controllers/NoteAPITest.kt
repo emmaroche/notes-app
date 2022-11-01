@@ -151,14 +151,14 @@ class NoteAPITest {
         @Test
         fun `Completing an already completed note returns false`() {
             assertTrue(populatedNotes!!.findNote(0)!!.isNoteCompleted)
-            assertFalse(populatedNotes!!.completedNote(0))
+            assertFalse(populatedNotes!!.completedNote(1))
         }
 
         @Test
         fun `Marking an active note as complete that exists returns true and completes`() {
             assertFalse(populatedNotes!!.findNote(1)!!.isNoteCompleted)
-            assertTrue(populatedNotes!!.completedNote(1))
-            assertTrue(populatedNotes!!.findNote(1)!!.isNoteCompleted)
+            assertTrue(populatedNotes!!.completedNote(0))
+            assertTrue(populatedNotes!!.findNote(0)!!.isNoteCompleted)
         }
     }
 
@@ -238,6 +238,25 @@ class NoteAPITest {
             assertFalse(archivedNotesString.contains("summer holiday"))
             assertFalse(archivedNotesString.contains("test app"))
             assertTrue(archivedNotesString.contains("swim"))
+        }
+
+        @Test
+        fun `listCompletedNotes returns no completed notes when ArrayList is empty`() {
+            assertEquals(0, emptyNotes!!.numberOfCompletedNotes())
+            assertTrue(
+                emptyNotes!!.listCompletedNotes().lowercase().contains("no notes")
+            )
+        }
+
+        @Test
+        fun `listCompletedNotes returns completed notes when ArrayList has completed notes stored`() {
+            assertEquals(4, populatedNotes!!.numberOfCompletedNotes())
+            val completedNotesString = populatedNotes!!.listCompletedNotes().lowercase()
+            assertFalse(completedNotesString.contains("learning kotlin"))
+            assertTrue(completedNotesString.contains("code app"))
+            assertTrue(completedNotesString.contains("summer holiday"))
+            assertTrue(completedNotesString.contains("test app"))
+            assertTrue(completedNotesString.contains("swim"))
         }
 
         @Test

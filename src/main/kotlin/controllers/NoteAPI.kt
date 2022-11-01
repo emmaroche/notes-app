@@ -38,6 +38,10 @@ class NoteAPI (serializerType: Serializer) {
         if  (numberOfArchivedNotes() == 0) "No archived notes stored"
         else formatListString(notes.filter { note -> note.isNoteArchived})
 
+    fun listCompletedNotes(): String =
+        if  (numberOfCompletedNotes() == 0) "No notes stored"
+        else formatListString(notes.filter { note -> !note.isNoteCompleted})
+
     fun listNotesBySelectedPriority(priority: Int): String =
         if (notes.isEmpty()) "No notes stored"
         else {
@@ -100,7 +104,7 @@ class NoteAPI (serializerType: Serializer) {
     fun completedNote(indexToComplete: Int): Boolean {
         if (isValidIndex(indexToComplete)) {
             val noteToComplete = notes[indexToComplete]
-            if (!noteToComplete.isNoteCompleted) {
+            if (noteToComplete.isNoteCompleted) {
                 noteToComplete.isNoteCompleted = true
                 return true
             }
@@ -112,11 +116,9 @@ class NoteAPI (serializerType: Serializer) {
         formatListString(
             notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true) })
 
-
     fun isValidIndex(index: Int) :Boolean{
         return isValidListIndex(index, notes)
     }
-
 
     @Throws(Exception::class)
     fun load() {

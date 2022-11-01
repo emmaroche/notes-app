@@ -56,6 +56,8 @@ class NoteAPI (serializerType: Serializer) {
 
     fun numberOfArchivedNotes(): Int = notes.count { note: Note -> note.isNoteArchived }
 
+    fun numberOfCompletedNotes(): Int = notes.count { note: Note -> !note.isNoteCompleted }
+
     fun numberOfActiveNotes(): Int = notes.count { note: Note -> !note.isNoteArchived }
 
     fun numberOfNotesByPriority(priority: Int): Int = notes.count { note: Note -> note.notePriority == priority }
@@ -95,6 +97,17 @@ class NoteAPI (serializerType: Serializer) {
         return false
     }
 
+    fun completedNote(indexToComplete: Int): Boolean {
+        if (isValidIndex(indexToComplete)) {
+            val noteToComplete = notes[indexToComplete]
+            if (!noteToComplete.isNoteCompleted) {
+                noteToComplete.isNoteCompleted = true
+                return true
+            }
+        }
+        return false
+    }
+
     fun searchByTitle (searchString : String) =
         formatListString(
             notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true) })
@@ -104,11 +117,6 @@ class NoteAPI (serializerType: Serializer) {
         return isValidListIndex(index, notes)
     }
 
-    //helper function
-    private fun formatListString(notesToFormat : List<Note>) : String =
-        notesToFormat
-            .joinToString (separator = "\n") { note ->
-                notes.indexOf(note).toString() + ": " + note.toString() }
 
     @Throws(Exception::class)
     fun load() {
@@ -120,6 +128,11 @@ class NoteAPI (serializerType: Serializer) {
         serializer.write(notes)
     }
 
-
+    //helper function
+    private fun formatListString(notesToFormat : List<Note>) : String =
+        notesToFormat
+            .joinToString (separator = "\n") { note ->
+                notes.indexOf(note).toString() + ": " + note.toString()
+            }
 
 }

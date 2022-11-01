@@ -28,9 +28,10 @@ fun mainMenu() : Int {
          > |   3) Update a note             |
          > |   4) Delete a note             |
          > |   5) Archive a note            |
-         > |   6) Save a note               |
-         > |   7) Load a note               |
-         > |   8) Search for a note         |
+         > |   6) Mark note as completed    |
+         > |   7) Save a note               |
+         > |   8) Load a note               |
+         > |   9) Search for a note         |
          > ----------------------------------
          > |   0) Exit                      |
          > ----------------------------------
@@ -45,9 +46,10 @@ fun runMenu() {
             3  -> updateNote()
             4  -> deleteNote()
             5  -> archiveNote()
-            6  -> save()
-            7  -> load()
-            8  -> searchNotes()
+            6  -> completeNote()
+            7  -> save()
+            8  -> load()
+            9  -> searchNotes()
             0  -> exitApp()
             else -> println("Invalid option entered: ${option}")
         }
@@ -60,7 +62,7 @@ fun addNote(){
     val noteCategory = readValidCategory("Enter a category for the note from ${CategoryUtility.categories}: ")
     val notePriority = readValidPriority("Enter note priority (1-low, 2, 3, 4, 5-high): ")
     val noteProgress = readValidProgress("Enter note progress (To-do, doing, done): ")
-    val isAdded = noteAPI.add(Note(noteTitle, noteContents, noteCategory, notePriority ,noteProgress, false))
+    val isAdded = noteAPI.add(Note(noteTitle, noteContents, noteCategory, notePriority ,noteProgress, false, false))
 
     if (isAdded) {
         println("Added Successfully")
@@ -145,7 +147,7 @@ fun updateNote() {
             val noteProgress = readValidProgress("Enter note progress (To-do, doing, done): ")
 
             //pass the index of the note and the new note details to NoteAPI for updating and check for success.
-            if (noteAPI.updateNote(indexToUpdate, Note(noteTitle, noteContents, noteCategory, notePriority, noteProgress, false))){
+            if (noteAPI.updateNote(indexToUpdate, Note(noteTitle, noteContents, noteCategory, notePriority, noteProgress, false, false))){
                 println("Update Successful")
             } else {
                 println("Update Failed")
@@ -166,6 +168,20 @@ fun archiveNote() {
             println("Archive Successful!")
         } else {
             println("Archive NOT Successful")
+        }
+    }
+}
+
+fun completeNote() {
+    listNotes()
+    if (noteAPI.numberOfCompletedNotes() > 0) {
+        // only ask the user to choose the note to archive if active notes exist
+        val indexToComplete = readNextInt("Enter the index of the note to mark as completed: ")
+        // pass the index of the note to NoteAPI for archiving and check for success.
+        if (noteAPI.completedNote(indexToComplete)) {
+            println("Completion Successful!")
+        } else {
+            println("Completion NOT Successful")
         }
     }
 }

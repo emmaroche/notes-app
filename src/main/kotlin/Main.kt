@@ -86,9 +86,10 @@ fun listNotes() {
             1 -> listAllNotes()
             2 -> listActiveNotes()
             3 -> listArchivedNotes()
-            4 -> listBySelectedPriority()
-            5 -> listBySelectedProgress()
-            6 -> listActiveNotesInAlphabeticalOrder()
+            4 -> listCompletedNotes()
+            5 -> listBySelectedPriority()
+            6 -> listBySelectedProgress()
+            7 -> listActiveNotesInAlphabeticalOrder()
             else -> println("Invalid option entered: " + option)
         }
     } else {
@@ -131,6 +132,10 @@ fun listActiveNotes() {
 
 fun listArchivedNotes() {
     println(noteAPI.listArchivedNotes())
+}
+
+fun listCompletedNotes() {
+    println(noteAPI.listCompletedNotes())
 }
 
 fun updateNote() {

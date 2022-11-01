@@ -25,13 +25,13 @@ fun mainMenu() : Int {
          > | NOTE MENU!!                    |
          > |   1) Add a note                |
          > |   2) List all notes            |
-         > |   3) Update a note             |
-         > |   4) Delete a note             |
-         > |   5) Archive a note            |
-         > |   6) Mark note as completed    |
-         > |   7) Save a note               |
-         > |   8) Load a note               |
-         > |   9) Search for a note         |
+         > |   3) Search notes              |
+         > |   4) Update a note             |
+         > |   5) Delete a note             |
+         > |   6) Archive a note            |
+         > |   7) Mark note as completed    |
+         > |   8) Save a note               |
+         > |   9) Load a note               |
          > ----------------------------------
          > |   0) Exit                      |
          > ----------------------------------
@@ -43,15 +43,13 @@ fun runMenu() {
         when (option) {
             1  -> addNote()
             2  -> listNotes()
-            3  -> updateNote()
-            4  -> deleteNote()
-            5  -> archiveNote()
-            6  -> completeNote()
-            7  -> save()
-            8  -> load()
-            9  -> searchNotesByTitle()
-            10  -> searchNotesByContents()
-            11  -> searchNotesByCategory()
+            3  -> searchNotes()
+            4  -> updateNote()
+            5  -> deleteNote()
+            6  -> archiveNote()
+            7  -> completeNote()
+            8  -> save()
+            9  -> load()
             0  -> exitApp()
             else -> println("Invalid option entered: ${option}")
         }
@@ -92,6 +90,30 @@ fun listNotes() {
             5 -> listBySelectedPriority()
             6 -> listBySelectedProgress()
             7 -> listActiveNotesInAlphabeticalOrder()
+            else -> println("Invalid option entered: " + option)
+        }
+    } else {
+        println("Option Invalid - No notes stored")
+    }
+}
+
+fun searchNotes() {
+    if (noteAPI.numberOfNotes() > 0) {
+        val option = readNextInt(
+            """
+                  > ---------------------------------
+                  > |   1) Search notes by title    |
+                  > |   2) Search notes by Contents |
+                  > |   3) Search notes by Category |
+                  > ---------------------------------
+         > ==>> """.trimMargin(">"))
+
+
+        when (option) {
+
+            1  -> searchNotesByTitle()
+            2  -> searchNotesByContents()
+            3  -> searchNotesByCategory()
             else -> println("Invalid option entered: " + option)
         }
     } else {

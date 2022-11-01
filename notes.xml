@@ -7,6 +7,7 @@
       <notePriority>4</notePriority>
       <noteProgress>To-do</noteProgress>
       <isNoteArchived>false</isNoteArchived>
+      <isNoteCompleted>false</isNoteCompleted>
     </models.Note>
     <models.Note>
       <noteTitle>Swim - Pool</noteTitle>
@@ -15,6 +16,7 @@
       <notePriority>3</notePriority>
       <noteProgress>Doing</noteProgress>
       <isNoteArchived>true</isNoteArchived>
+      <isNoteCompleted>false</isNoteCompleted>
     </models.Note>
     <models.Note>
       <noteTitle>Summer Holiday to France</noteTitle>
@@ -23,6 +25,7 @@
       <notePriority>1</notePriority>
       <noteProgress>Doing</noteProgress>
       <isNoteArchived>false</isNoteArchived>
+      <isNoteCompleted>false</isNoteCompleted>
     </models.Note>
   </list>
 </object-stream>

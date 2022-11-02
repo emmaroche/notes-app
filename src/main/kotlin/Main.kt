@@ -208,7 +208,6 @@ fun listArchivedNotes() {
 
     println(noteAPI.listArchivedNotes())
 }
-
 //List completed notes
 fun listCompletedNotes() {
     logger.info { "Listing completed notes \n" }
@@ -316,7 +315,7 @@ fun completeNote() {
     logger.info { "Marking note as completed\n" }
 
     listActiveNotes()
-    if (noteAPI.numberOfCompletedNotes() > 0) {
+    if (noteAPI.numberOfActiveNotes() > 0) {
         // only ask the user to choose the note to archive if active notes exist
         val indexToComplete = readNextInt("\n         Enter the number of the note to mark as completed: ")
         // pass the index of the note to NoteAPI for archiving and check for success.

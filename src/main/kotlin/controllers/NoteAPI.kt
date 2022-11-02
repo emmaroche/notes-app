@@ -35,8 +35,8 @@ class NoteAPI (serializerType: Serializer) {
         else formatListString(notes.filter { note -> note.isNoteArchived})
 
     fun listCompletedNotes(): String =
-        if  (numberOfCompletedNotes() == 0) "\n        No notes stored\n"
-        else formatListString(notes.filter { note -> !note.isNoteCompleted})
+        if  (numberOfCompletedNotes() == 0) "\n        No completed notes stored\n"
+        else formatListString(notes.filter { note -> note.isNoteCompleted})
 
     fun listActiveNotesInAlphabeticalOrderOfTitle(): String =
         if  (notes.isEmpty()) "\n         No notes stored\n"
@@ -60,11 +60,11 @@ class NoteAPI (serializerType: Serializer) {
 
 
     //Counting methods
-    fun numberOfActiveNotes(): Int = notes.count { note: Note -> !note.isNoteArchived }
+    fun numberOfActiveNotes(): Int = notes.count { note: Note -> !note.isNoteArchived && !note.isNoteCompleted }
 
     fun numberOfArchivedNotes(): Int = notes.count { note: Note -> note.isNoteArchived }
 
-    fun numberOfCompletedNotes(): Int = notes.count { note: Note -> !note.isNoteCompleted }
+    fun numberOfCompletedNotes(): Int = notes.count { note: Note -> note.isNoteCompleted }
 
     fun numberOfNotesByPriority(priority: Int): Int = notes.count { note: Note -> note.notePriority == priority }
 
@@ -112,8 +112,10 @@ class NoteAPI (serializerType: Serializer) {
     fun completedNote(indexToComplete: Int): Boolean {
         if (isValidIndex(indexToComplete)) {
             val noteToComplete = notes[indexToComplete]
-            if (noteToComplete.isNoteCompleted) {
+            if (!noteToComplete.isNoteCompleted) {
                 noteToComplete.isNoteCompleted = true
+                //Changes progress of note to done
+                noteToComplete.noteProgress = ("Done")
                 return true
             }
         }
@@ -137,6 +139,7 @@ class NoteAPI (serializerType: Serializer) {
         return isValidListIndex(index, notes)
     }
 
+    //read and write methods
     @Throws(Exception::class)
     fun load() {
         notes = serializer.read() as ArrayList<Note>

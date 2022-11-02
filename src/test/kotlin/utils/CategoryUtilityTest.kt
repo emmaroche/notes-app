@@ -5,10 +5,11 @@ import org.junit.jupiter.api.Test
 import utils.CategoryUtility.categories
 import utils.CategoryUtility.isValidCategory
 
+//reference for the code below: https://reader.tutors.dev/#/lab/sdt-sept-2022.netlify.app/topic-07-lambdas/unit-02-labs/book-01/Assignment2
 internal class CategoryUtilityTest {
     @Test
     fun categoriesReturnsFullCategoriesSet(){
-        Assertions.assertEquals(2, categories.size)
+        Assertions.assertEquals(5, categories.size)
         Assertions.assertTrue(categories.contains("Home"))
         Assertions.assertTrue(categories.contains("College"))
         Assertions.assertFalse(categories.contains(""))

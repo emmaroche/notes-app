@@ -11,11 +11,6 @@ class NoteAPI (serializerType: Serializer) {
     fun add(note: Note): Boolean {
         return notes.add(note)
     }
-
-    fun listAllNotes(): String =
-        if  (notes.isEmpty()) "No notes stored"
-        else formatListString(notes)
-
     fun numberOfNotes(): Int {
         return notes.size
     }
@@ -26,54 +21,57 @@ class NoteAPI (serializerType: Serializer) {
         } else null
     }
 
+    //Listing methods
+    fun listAllNotes(): String =
+        if  (notes.isEmpty()) "\n         No notes stored\n"
+        else formatListString(notes)
+
     fun listActiveNotes(): String =
-        if  (numberOfActiveNotes() == 0)  "No active notes stored"
+        if  (numberOfActiveNotes() == 0)  "\n         No active notes stored\n"
         else formatListString(notes.filter { note -> !note.isNoteArchived})
 
-    fun listActiveNotesInAlphabeticalOrderOfTitle(): String =
-        if  (numberOfActiveNotes() == 0)  "No active notes stored"
-        else formatListString(notes.sortedBy { note -> note.noteTitle})
-
     fun listArchivedNotes(): String =
-        if  (numberOfArchivedNotes() == 0) "No archived notes stored"
+        if  (numberOfArchivedNotes() == 0) "\n         No archived notes stored\n"
         else formatListString(notes.filter { note -> note.isNoteArchived})
 
     fun listCompletedNotes(): String =
-        if  (numberOfCompletedNotes() == 0) "No notes stored"
+        if  (numberOfCompletedNotes() == 0) "\n        No notes stored\n"
         else formatListString(notes.filter { note -> !note.isNoteCompleted})
 
+    fun listActiveNotesInAlphabeticalOrderOfTitle(): String =
+        if  (notes.isEmpty()) "\n         No notes stored\n"
+        else formatListString(notes.sortedBy { note -> note.noteTitle})
+
     fun listNotesBySelectedPriority(priority: Int): String =
-        if (notes.isEmpty()) "No notes stored"
+        if (notes.isEmpty()) "\n         No notes stored"
         else {
             val listOfNotes = formatListString(notes.filter{ note -> note.notePriority == priority})
-            if (listOfNotes.equals("")) "No notes with priority: $priority"
-            else "${numberOfNotesByPriority(priority)} notes with priority $priority: $listOfNotes"
+            if (listOfNotes.equals("")) "\n         No notes with priority: $priority\n"
+            else "\n         ${numberOfNotesByPriority(priority)} note(s) with priority $priority\n: $listOfNotes"
         }
 
     fun listNotesBySelectedProgress(progress: String): String =
-        if (notes.isEmpty()) "No notes stored"
+        if (notes.isEmpty()) "\n         No notes stored\n"
         else {
             val listOfNotes = formatListString(notes.filter{ note -> note.noteProgress == progress})
-            if (listOfNotes.equals("")) "No notes with progress: $progress"
-            else "${numberOfNotesByProgress(progress)} notes with progress $progress: $listOfNotes"
+            if (listOfNotes.equals("")) "\n         No notes with progress: $progress\n"
+            else "\n         ${numberOfNotesByProgress(progress)} note(s) with progress $progress\n: $listOfNotes"
         }
+
+
+    //Counting methods
+    fun numberOfActiveNotes(): Int = notes.count { note: Note -> !note.isNoteArchived }
 
     fun numberOfArchivedNotes(): Int = notes.count { note: Note -> note.isNoteArchived }
 
     fun numberOfCompletedNotes(): Int = notes.count { note: Note -> !note.isNoteCompleted }
 
-    fun numberOfActiveNotes(): Int = notes.count { note: Note -> !note.isNoteArchived }
-
     fun numberOfNotesByPriority(priority: Int): Int = notes.count { note: Note -> note.notePriority == priority }
 
     fun numberOfNotesByProgress(progress: String): Int = notes.count { note: Note -> note.noteProgress == progress }
 
-    fun deleteNote(indexToDelete: Int): Note? {
-        return if (isValidListIndex(indexToDelete, notes)) {
-            notes.removeAt(indexToDelete)
-        } else null
-    }
 
+    //update method
     fun updateNote(indexToUpdate: Int, note: Note?): Boolean {
         //find the note object by the index number
         val foundNote = findNote(indexToUpdate)
@@ -90,6 +88,15 @@ class NoteAPI (serializerType: Serializer) {
         return false
     }
 
+    //delete method
+    fun deleteNote(indexToDelete: Int): Note? {
+        return if (isValidListIndex(indexToDelete, notes)) {
+            notes.removeAt(indexToDelete)
+        } else null
+    }
+
+
+    //archive note method
     fun archiveNote(indexToArchive: Int): Boolean {
         if (isValidIndex(indexToArchive)) {
             val noteToArchive = notes[indexToArchive]
@@ -101,6 +108,7 @@ class NoteAPI (serializerType: Serializer) {
         return false
     }
 
+    //completed note method
     fun completedNote(indexToComplete: Int): Boolean {
         if (isValidIndex(indexToComplete)) {
             val noteToComplete = notes[indexToComplete]
@@ -112,6 +120,7 @@ class NoteAPI (serializerType: Serializer) {
         return false
     }
 
+    //search methods
     fun searchByTitle (searchString : String) =
         formatListString(
             notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true) })
@@ -139,10 +148,18 @@ class NoteAPI (serializerType: Serializer) {
     }
 
     //helper function
+
+    // displays the colour
+    val magenta = "\u001b[35m"
+    // displays the decoration
+    val bold = "\u001b[1m"
+    // resets colour back to what it previously was
+    val reset = "\u001b[0m"
     private fun formatListString(notesToFormat : List<Note>) : String =
+
         notesToFormat
             .joinToString (separator = "\n") { note ->
-                notes.indexOf(note).toString() + ": " + note.toString()
+            "\n        $magenta$bold ⬇ Note " + notes.indexOf(note).toString() + " ⬇$reset"+ note.toString()
             }
 
 }

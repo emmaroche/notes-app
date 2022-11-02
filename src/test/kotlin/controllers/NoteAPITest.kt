@@ -212,12 +212,12 @@ class NoteAPITest {
         @Test
         fun `listActiveNotesInAlphabeticalOrderOfTitle returns active notes when ArrayList has active notes stored`() {
             assertEquals(3, populatedNotes!!.numberOfActiveNotes())
-            val AlphaActiveNotesString = populatedNotes!!.listActiveNotesInAlphabeticalOrderOfTitle().lowercase()
-            assertTrue(AlphaActiveNotesString.contains("learning kotlin"))
-            assertTrue(AlphaActiveNotesString.contains("code app"))
-            assertTrue(AlphaActiveNotesString.contains("summer holiday"))
-            assertTrue(AlphaActiveNotesString.contains("test app"))
-            assertTrue(AlphaActiveNotesString.contains("swim"))
+            val alphaActiveNotesString = populatedNotes!!.listActiveNotesInAlphabeticalOrderOfTitle().lowercase()
+            assertTrue(alphaActiveNotesString.contains("learning kotlin"))
+            assertTrue(alphaActiveNotesString.contains("code app"))
+            assertTrue(alphaActiveNotesString.contains("summer holiday"))
+            assertTrue(alphaActiveNotesString.contains("test app"))
+            assertTrue(alphaActiveNotesString.contains("swim"))
         }
 
 

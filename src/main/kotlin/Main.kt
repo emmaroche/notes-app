@@ -77,7 +77,8 @@ fun runMenu() {
 
 //Add note
 fun addNote(){
-    //logger.info { "addNote() function invoked" }
+    logger.info { "Adding a new note to the list\n" }
+
     val noteTitle = readNextLine("\n         Enter a title for the note: ")
     val noteContents = readNextLine("         Enter contents for the note: ")
     val noteCategory = readValidCategory("         Enter a category for the note from ${CategoryUtility.categories}: ")
@@ -94,6 +95,7 @@ fun addNote(){
 
 //List notes
 fun listNotes() {
+    logger.info { "List notes menu\n" }
 
     // displays the colour
     val magenta = "\u001b[35m"
@@ -144,6 +146,7 @@ fun listNotes() {
 
 //Search notes
 fun searchNotes() {
+     logger.info { "Search notes menu\n" }
 
     // displays the colour
     val magenta = "\u001b[35m"
@@ -188,31 +191,42 @@ fun searchNotes() {
 
 //List ALL notes
 fun listAllNotes() {
+    logger.info { "Listing all notes \n" }
+
     println(noteAPI.listAllNotes())
 }
 
 //List active notes
 fun listActiveNotes() {
+    logger.info { "Listing active notes \n" }
     println(noteAPI.listActiveNotes())
 }
 
 //List archived notes
 fun listArchivedNotes() {
+    logger.info { "Listing archived notes \n" }
+
     println(noteAPI.listArchivedNotes())
 }
 
 //List completed notes
 fun listCompletedNotes() {
+    logger.info { "Listing completed notes \n" }
+
     println(noteAPI.listCompletedNotes())
 }
 
 //List notes in alphabetical order of the title
 fun listActiveNotesInAlphabeticalOrder(){
+    logger.info { "Listing note in Alphabetical Order of title \n" }
+
     println(noteAPI.listActiveNotesInAlphabeticalOrderOfTitle())
 }
 
 //List notes of the priority that was inputted
 fun listBySelectedPriority() {
+    logger.info { "Listing note by selected priority\n" }
+
     val searchSelectedPriority = readNextInt("\n         Enter the note priority number to list: ")
     val searchResults = noteAPI.listNotesBySelectedPriority(searchSelectedPriority)
     if (searchResults.isEmpty()) {
@@ -224,6 +238,8 @@ fun listBySelectedPriority() {
 
 //List notes of the progress that was inputted
 fun listBySelectedProgress() {
+    logger.info { "Listing note by selected progress\n" }
+
     val searchSelectedProgress = readNextLine("\n        Enter the note progress to list: ")
     val searchResults = noteAPI.listNotesBySelectedProgress(searchSelectedProgress)
     if (searchResults.isEmpty()) {
@@ -235,7 +251,8 @@ fun listBySelectedProgress() {
 
 //Update a note
 fun updateNote() {
-    //logger.info { "updateNotes() function invoked" }
+    logger.info { "Updating note\n" }
+
     listAllNotes()
     if (noteAPI.numberOfNotes() > 0) {
         //only ask the user to choose the note if notes exist
@@ -261,7 +278,8 @@ fun updateNote() {
 
 //Delete a note
 fun deleteNote(){
-    //logger.info { "deleteNotes() function invoked" }
+    logger.info { "Deleting note\n" }
+
     listAllNotes()
     if (noteAPI.numberOfNotes() > 0) {
         //only ask the user to choose the note to delete if notes exist
@@ -278,6 +296,8 @@ fun deleteNote(){
 
 //Archive a note
 fun archiveNote() {
+    logger.info { "Archiving note\n" }
+
     listActiveNotes()
     if (noteAPI.numberOfActiveNotes() > 0) {
         // only ask the user to choose the note to archive if active notes exist
@@ -293,6 +313,8 @@ fun archiveNote() {
 
 //Mark a note as completed
 fun completeNote() {
+    logger.info { "Marking note as completed\n" }
+
     listActiveNotes()
     if (noteAPI.numberOfCompletedNotes() > 0) {
         // only ask the user to choose the note to archive if active notes exist
@@ -308,6 +330,8 @@ fun completeNote() {
 
 //Search notes by title
 fun searchNotesByTitle() {
+    logger.info { "Searching note by title\n" }
+
     val searchTitle = readNextLine("\n         Enter the title to search by: ")
     val searchResults = noteAPI.searchByTitle(searchTitle)
     if (searchResults.isEmpty()) {
@@ -319,6 +343,8 @@ fun searchNotesByTitle() {
 
 //Search notes by its contents
 fun searchNotesByContents() {
+    logger.info { "Searching note by Contents\n" }
+
     val searchTitle = readNextLine("\n         Enter contents to search by: ")
     val searchResults = noteAPI.searchByContent(searchTitle)
     if (searchResults.isEmpty()) {
@@ -330,6 +356,8 @@ fun searchNotesByContents() {
 
 //Search notes by specific category
 fun searchNotesByCategory() {
+    logger.info { "Searching note by category\n" }
+
     val searchTitle = readNextLine("\n         Enter the category to search by: ")
     val searchResults = noteAPI.searchByCategory(searchTitle)
     if (searchResults.isEmpty()) {
@@ -356,7 +384,7 @@ fun load() {
 }
 
 fun exitApp(){
-    logger.info { "exitApp() function invoked" }
+    logger.info { "Exiting App, thank you for using!\n" }
     exit(0)
 }
 

@@ -151,14 +151,14 @@ class NoteAPITest {
         @Test
         fun `Completing an already completed note returns false`() {
             assertTrue(populatedNotes!!.findNote(0)!!.isNoteCompleted)
-            assertFalse(populatedNotes!!.completedNote(1))
+            assertFalse(populatedNotes!!.completedNote(0))
         }
 
         @Test
         fun `Marking an active note as complete that exists returns true and completes`() {
             assertFalse(populatedNotes!!.findNote(1)!!.isNoteCompleted)
-            assertTrue(populatedNotes!!.completedNote(0))
-            assertTrue(populatedNotes!!.findNote(0)!!.isNoteCompleted)
+            assertTrue(populatedNotes!!.completedNote(1))
+            assertTrue(populatedNotes!!.findNote(1)!!.isNoteCompleted)
         }
     }
 
@@ -192,7 +192,7 @@ class NoteAPITest {
 
         @Test
         fun `listActiveNotes returns active notes when ArrayList has active notes stored`() {
-            assertEquals(3, populatedNotes!!.numberOfActiveNotes())
+            assertEquals(2, populatedNotes!!.numberOfActiveNotes())
             val activeNotesString = populatedNotes!!.listActiveNotes().lowercase()
             assertTrue(activeNotesString.contains("learning kotlin"))
             assertFalse(activeNotesString.contains("code app"))
@@ -203,15 +203,15 @@ class NoteAPITest {
 
         @Test
         fun `listActiveNotesInAlphabeticalOrderOfTitle returns no active notes stored when ArrayList is empty`() {
-            assertEquals(0, emptyNotes!!.numberOfActiveNotes())
-            assertTrue(
-                emptyNotes!!.listActiveNotesInAlphabeticalOrderOfTitle().lowercase().contains("no active notes")
+            assertEquals(0, emptyNotes!!.numberOfNotes())
+            assertFalse(
+                emptyNotes!!.listActiveNotesInAlphabeticalOrderOfTitle().lowercase().contains("No notes stored")
             )
         }
 
         @Test
         fun `listActiveNotesInAlphabeticalOrderOfTitle returns active notes when ArrayList has active notes stored`() {
-            assertEquals(3, populatedNotes!!.numberOfActiveNotes())
+            assertEquals(2, populatedNotes!!.numberOfActiveNotes())
             val alphaActiveNotesString = populatedNotes!!.listActiveNotesInAlphabeticalOrderOfTitle().lowercase()
             assertTrue(alphaActiveNotesString.contains("learning kotlin"))
             assertTrue(alphaActiveNotesString.contains("code app"))
@@ -240,23 +240,24 @@ class NoteAPITest {
             assertTrue(archivedNotesString.contains("swim"))
         }
 
+
         @Test
         fun `listCompletedNotes returns no completed notes when ArrayList is empty`() {
             assertEquals(0, emptyNotes!!.numberOfCompletedNotes())
             assertTrue(
-                emptyNotes!!.listCompletedNotes().lowercase().contains("no notes")
+                emptyNotes!!.listCompletedNotes().lowercase().contains("no completed notes stored")
             )
         }
 
         @Test
         fun `listCompletedNotes returns completed notes when ArrayList has completed notes stored`() {
-            assertEquals(4, populatedNotes!!.numberOfCompletedNotes())
+            assertEquals(1, populatedNotes!!.numberOfCompletedNotes())
             val completedNotesString = populatedNotes!!.listCompletedNotes().lowercase()
-            assertFalse(completedNotesString.contains("learning kotlin"))
-            assertTrue(completedNotesString.contains("code app"))
-            assertTrue(completedNotesString.contains("summer holiday"))
-            assertTrue(completedNotesString.contains("test app"))
-            assertTrue(completedNotesString.contains("swim"))
+            assertTrue(completedNotesString.contains("learning kotlin"))
+            assertFalse(completedNotesString.contains("code app"))
+            assertFalse(completedNotesString.contains("summer holiday"))
+            assertFalse(completedNotesString.contains("test app"))
+            assertFalse(completedNotesString.contains("swim"))
         }
 
         @Test
@@ -328,7 +329,6 @@ class NoteAPITest {
             val progressToDoString = populatedNotes!!.listNotesBySelectedProgress("To-do").lowercase()
             assertTrue(progressToDoString.contains("learning kotlin"))
             assertFalse(progressToDoString.contains("swim"))
-
 
         }
     }
@@ -429,13 +429,13 @@ class NoteAPITest {
         }
         @Test
         fun numberOfCompletedNotesCalculatedCorrectly() {
-            assertEquals(4, populatedNotes!!.numberOfCompletedNotes())
+            assertEquals(1, populatedNotes!!.numberOfCompletedNotes())
             assertEquals(0, emptyNotes!!.numberOfCompletedNotes())
         }
 
         @Test
         fun numberOfActiveNotesCalculatedCorrectly() {
-            assertEquals(3, populatedNotes!!.numberOfActiveNotes())
+            assertEquals(2, populatedNotes!!.numberOfActiveNotes())
             assertEquals(0, emptyNotes!!.numberOfActiveNotes())
         }
 

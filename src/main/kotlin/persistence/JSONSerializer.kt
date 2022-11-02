@@ -8,6 +8,7 @@ import java.io.FileReader
 import java.io.FileWriter
 
 class JSONSerializer(private val file: File) : Serializer {
+
     @Throws(Exception::class)
     override fun read(): Any {
         val xStream = XStream(JettisonMappedXmlDriver())
@@ -25,4 +26,5 @@ class JSONSerializer(private val file: File) : Serializer {
         outputStream.writeObject(obj)
         outputStream.close()
     }
+
 }

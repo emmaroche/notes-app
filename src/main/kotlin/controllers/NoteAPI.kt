@@ -5,12 +5,14 @@ import models.Note
 import utils.Utilities.isValidListIndex
 
 class NoteAPI (serializerType: Serializer) {
+
     private var serializer: Serializer = serializerType
     private var notes = ArrayList<Note>()
 
     fun add(note: Note): Boolean {
         return notes.add(note)
     }
+
     fun numberOfNotes(): Int {
         return notes.size
     }
@@ -21,7 +23,7 @@ class NoteAPI (serializerType: Serializer) {
         } else null
     }
 
-    //Listing methods
+    //listing methods
     fun listAllNotes(): String =
         if  (notes.isEmpty()) "\n         No notes stored\n"
         else formatListString(notes)
@@ -59,7 +61,7 @@ class NoteAPI (serializerType: Serializer) {
         }
 
 
-    //Counting methods
+    //counting methods
     fun numberOfActiveNotes(): Int = notes.count { note: Note -> !note.isNoteArchived && !note.isNoteCompleted }
 
     fun numberOfArchivedNotes(): Int = notes.count { note: Note -> note.isNoteArchived }
@@ -79,8 +81,10 @@ class NoteAPI (serializerType: Serializer) {
         //if the note exists, use the note details passed as parameters to update the found note in the ArrayList.
         if ((foundNote != null) && (note != null)) {
             foundNote.noteTitle = note.noteTitle
-            foundNote.notePriority = note.notePriority
+            foundNote.noteContents = note.noteContents
             foundNote.noteCategory = note.noteCategory
+            foundNote.notePriority = note.notePriority
+            foundNote.noteProgress = note.noteProgress
             return true
         }
 

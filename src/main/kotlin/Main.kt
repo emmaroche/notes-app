@@ -56,6 +56,7 @@ $magenta \   / $reset
          >         $magenta==>>$reset """.trimMargin(">"))
 
 }
+
 fun runMenu() {
     do {
         val option = mainMenu()
@@ -75,7 +76,7 @@ fun runMenu() {
     } while (true)
 }
 
-//Add note
+//add a note
 fun addNote(){
     logger.info { "Adding a new note to the list\n" }
 
@@ -93,7 +94,7 @@ fun addNote(){
     }
 }
 
-//List notes
+//list notes menu
 fun listNotes() {
     logger.info { "List notes menu\n" }
 
@@ -144,7 +145,7 @@ fun listNotes() {
     }
 }
 
-//Search notes
+//search notes menu
 fun searchNotes() {
      logger.info { "Search notes menu\n" }
 
@@ -163,8 +164,8 @@ fun searchNotes() {
          >        $cyan|$reset                                             $cyan|$reset
          >        $cyan|$reset $bold  Search Menu$reset                               $cyan|$reset
          >        $cyan|$reset                                             $cyan|$reset
-         >        $cyan|$reset  $magenta 1)$reset Search notes by title                  $cyan|$reset
-         >        $cyan|$reset  $magenta 2)$reset Search notes by contents               $cyan|$reset
+         >        $cyan|$reset  $magenta 1)$reset Search notes by Title                  $cyan|$reset
+         >        $cyan|$reset  $magenta 2)$reset Search notes by Contents               $cyan|$reset
          >        $cyan|$reset  $magenta 3)$reset Search Notes by Category               $cyan|$reset
          >        $cyan|$reset                                             $cyan|$reset
          >        $cyan|$reset  $magenta 0)$reset Return to notes menu                   $cyan|$reset
@@ -189,40 +190,40 @@ fun searchNotes() {
     }
 }
 
-//List ALL notes
+//list all notes
 fun listAllNotes() {
     logger.info { "Listing all notes \n" }
 
     println(noteAPI.listAllNotes())
 }
 
-//List active notes
+//list active notes
 fun listActiveNotes() {
     logger.info { "Listing active notes \n" }
     println(noteAPI.listActiveNotes())
 }
 
-//List archived notes
+//list archived notes
 fun listArchivedNotes() {
     logger.info { "Listing archived notes \n" }
 
     println(noteAPI.listArchivedNotes())
 }
-//List completed notes
+//list completed notes
 fun listCompletedNotes() {
     logger.info { "Listing completed notes \n" }
 
     println(noteAPI.listCompletedNotes())
 }
 
-//List notes in alphabetical order of the title
+//list notes in alphabetical order of the title
 fun listActiveNotesInAlphabeticalOrder(){
     logger.info { "Listing note in Alphabetical Order of title \n" }
 
     println(noteAPI.listActiveNotesInAlphabeticalOrderOfTitle())
 }
 
-//List notes of the priority that was inputted
+//list notes of the priority that was inputted
 fun listBySelectedPriority() {
     logger.info { "Listing note by selected priority\n" }
 
@@ -235,7 +236,7 @@ fun listBySelectedPriority() {
     }
 }
 
-//List notes of the progress that was inputted
+//list notes of the progress that was inputted
 fun listBySelectedProgress() {
     logger.info { "Listing note by selected progress\n" }
 
@@ -248,7 +249,7 @@ fun listBySelectedProgress() {
     }
 }
 
-//Update a note
+//update a note
 fun updateNote() {
     logger.info { "Updating note\n" }
 
@@ -275,7 +276,7 @@ fun updateNote() {
     }
 }
 
-//Delete a note
+//delete a note
 fun deleteNote(){
     logger.info { "Deleting note\n" }
 
@@ -293,7 +294,7 @@ fun deleteNote(){
     }
 }
 
-//Archive a note
+//archive a note
 fun archiveNote() {
     logger.info { "Archiving note\n" }
 
@@ -310,7 +311,7 @@ fun archiveNote() {
     }
 }
 
-//Mark a note as completed
+//mark a note as completed
 fun completeNote() {
     logger.info { "Marking note as completed\n" }
 
@@ -327,7 +328,7 @@ fun completeNote() {
     }
 }
 
-//Search notes by title
+//search notes by title
 fun searchNotesByTitle() {
     logger.info { "Searching note by title\n" }
 
@@ -340,7 +341,7 @@ fun searchNotesByTitle() {
     }
 }
 
-//Search notes by its contents
+//search notes by its contents
 fun searchNotesByContents() {
     logger.info { "Searching note by Contents\n" }
 
@@ -353,7 +354,7 @@ fun searchNotesByContents() {
     }
 }
 
-//Search notes by specific category
+//search notes by specific category
 fun searchNotesByCategory() {
     logger.info { "Searching note by category\n" }
 

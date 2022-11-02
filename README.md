@@ -2,8 +2,8 @@
 Assignment 2 for Software Development Tools
 
 ## App Description
-This a console Note app written in Kotlin. 
-Intellij was used to create and run this app.
+This is a console Note app written in Kotlin. 
+Intellij was used to create and run this app and JUnit 5 was used for testing this app.
 
 In this app, you are be able to do basic CRUD on notes as well as being able to archive notes, 
 mark notes as complete and search for notes.
@@ -35,7 +35,7 @@ _(The lab work was split into 3 different releases)_
 - Added logging support
 
 ### V2 additions
-- Added functionality that allows a user to add a note
+- Added functionality to add a note
 
 
 - Added functionality that lists all notes 
@@ -49,7 +49,7 @@ _(The lab work was split into 3 different releases)_
  
 - Added JUnit tests for all of the above functionality
 
-### V3 additions
+### V3 additions (final two labs combined together)
 -  Added functionality to update a note
 
 
@@ -72,7 +72,7 @@ _(The lab work was split into 3 different releases)_
 -  Added functionality to archive a note
 
 
--  Added a submenu for that includes the listing functionalities
+-  Added a list submenu that includes the listing functionalities
 
 
 -  Added functionality to search for a note by title
@@ -87,7 +87,7 @@ _(The lab work was split into 3 different releases)_
 -  Added JUnit tests for the applicable functionality above
 
 For Assignment 2, the task was given to add on additional work that was not specified 
-in the labs such as, additional listing and counting methods, incorporating new input fields, 
+in the labs such as; additional listing and counting methods, incorporating new input fields, 
 adding new utility classes in the utils folder for validation and adding 
 the corresponding JUnit testing to the note-app.
 
@@ -96,7 +96,8 @@ the corresponding JUnit testing to the note-app.
 _(The additional assignment work was split into 2 different releases)_
 
 ### V4 additions
-- Incorporated two new input fields to the note class (note contents and note progress)
+- Incorporated two new input fields to the note class (note contents and note progress 
+  (To-do, doing, done))
 
 
 - Added new utility classes in the utils folder for validation purposes
@@ -104,6 +105,7 @@ _(The additional assignment work was split into 2 different releases)_
 
 - Added functionality to mark a note as completed (this will automatically 
   change the progress to done)
+
 
 - Added additional list methods (list completed notes, list notes in alphabetical 
   order of the titles, list notes by specified priority and list notes 
@@ -113,7 +115,7 @@ _(The additional assignment work was split into 2 different releases)_
 - Added additional count methods (numberOfCompletedNotes, numberOfNotesByProgress)
 
 
-- Added a submenu for that includes the searching functionalities
+- Added a search submenu for that includes the searching functionalities
 
 
 - Improved user interface of the app
@@ -129,6 +131,11 @@ _(The additional assignment work was split into 2 different releases)_
   related JUnit tests to accommodate for these fixes
 
 ### V5 additions (final release)
+
+**This release includes all of the above along with some final changes:**
+
+- Made sure the code adheres to good coding practices e.g by making sure it is neat
+- Any code that needed minor tweaks was edited 
 
 ## Package Structure
 
@@ -147,19 +154,19 @@ Issue - Branch - Commit(s) - Push - Pull Request - Merge - Close Issue - Delete 
 As part of Assignment 2, I improved the UI of the notes-app. 
 
 For the note menu, I created a pen and notepad design
-that I first drafted up on my laptops 'Notes' application
+that I first drafted up on my laptops 'Notes' application,
 using symbols and characters on my keyboard like so:
 
 ![pen and notepad design](readMePictures/roughDraft.png)
 
 I then copied the design into Intellij where I added the note menu 
-options to the note pad design and added "!Notes App!" 
+options into the note pad design and added "!Notes App!" 
 text into the pen design like so:
 
 ![note menu](readMePictures/noteMenu.png)
 
 For both the list menu and search sub menus, I removed the pen design 
-but continued to use the notepad design and then added the mnu options into
+but continued to use the notepad design and then added the menu options into
 the notepad design like so:
 
 ![list menu menu](readMePictures/listMenu.png)

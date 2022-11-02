@@ -16,6 +16,7 @@ import java.util.*
  */
 
 object ScannerInput {
+
     /**
      * Read an int from the user.
      * If the entered data isn't actually an int the user is prompted again to enter the int.
@@ -35,24 +36,6 @@ object ScannerInput {
         } while (true)
     }
 
-    /**
-     * Read a double from the user.  If the entered data isn't actually a double,
-     * the user is prompted again to enter the double.
-     *
-     * @param prompt  The information printed to the console for the user to read
-     * @return The number read from the user and verified as a double.
-     */
-    @JvmStatic
-    fun readNextDouble(prompt: String?): Double {
-        do {
-            try {
-                print(prompt)
-                return Scanner(System.`in`).next().toDouble()
-            } catch (e: NumberFormatException) {
-                System.err.println("\tEnter a number please.")
-            }
-        } while (true)
-    }
 
     /**
      * Read a line of text from the user.  There is no validation done on the entered data.
@@ -66,15 +49,4 @@ object ScannerInput {
         return Scanner(System.`in`).nextLine()
     }
 
-    /**
-     * Read a single character of text from the user.  There is no validation done on the entered data.
-     *
-     * @param prompt  The information printed to the console for the user to read
-     * @return The char read from the user.
-     */
-    @JvmStatic
-    fun readNextChar(prompt: String?): Char {
-        print(prompt)
-        return Scanner(System.`in`).next()[0]
-    }
 }

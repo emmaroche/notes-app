@@ -1,5 +1,6 @@
 package utils
 
+//reference for the code below: https://reader.tutors.dev/#/lab/sdt-sept-2022.netlify.app/topic-07-lambdas/unit-02-labs/book-01/Assignment2
 object Utilities {
 
     //NOTE: JvmStatic annotation means that the methods are static i.e. we can call them over the class

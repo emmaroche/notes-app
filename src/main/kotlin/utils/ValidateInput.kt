@@ -13,7 +13,7 @@ object ValidateInput {
             if (CategoryUtility.isValidCategory(input))
                 return input
             else {
-                print("Invalid category $input.  Please try again: ")
+                print("         Invalid category $input.  Please try again: ")
                 input = Scanner(System.`in`).nextLine()
             }
         } while (true)
@@ -27,7 +27,7 @@ object ValidateInput {
             if (ProgressUtility.isValidProgress(input))
                 return input
             else {
-                print("Invalid input $input.  Please try again: ")
+                print("         Invalid input $input.  Please try again: ")
                 input = Scanner(System.`in`).nextLine()
             }
         } while (true)
@@ -40,7 +40,7 @@ object ValidateInput {
             if (Utilities.validRange(input, 1 ,5))
                 return input
             else {
-                print("Invalid priority $input.")
+                print("         Invalid priority $input.")
                 input = readNextInt(prompt)
             }
         } while (true)

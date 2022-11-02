@@ -14,28 +14,47 @@ import java.io.File
 //private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
 private val noteAPI = NoteAPI(JSONSerializer(File("notes.json")))
 private val logger = KotlinLogging.logger {}
+
 fun main(args: Array<String>) {
     runMenu()
 }
+
 fun mainMenu() : Int {
+
+    //code reference for adding colour to improve UI: https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html#deletion
+
+    // displays the colour
+    val magenta = "\u001b[35m"
+    val cyan = "\u001b[36m"
+    // displays the decoration
+    val bold = "\u001b[1m"
+    // resets colour and decoration back to what it previously was
+    val reset = "\u001b[0m"
+
     return readNextInt(""" 
-         > ----------------------------------
-         > |        NOTE KEEPER APP         |
-         > ----------------------------------
-         > | NOTE MENU!!                    |
-         > |   1) Add a note                |
-         > |   2) List all notes            |
-         > |   3) Search notes              |
-         > |   4) Update a note             |
-         > |   5) Delete a note             |
-         > |   6) Archive a note            |
-         > |   7) Mark note as completed    |
-         > |   8) Save a note               |
-         > |   9) Load a note               |
-         > ----------------------------------
-         > |   0) Exit                      |
-         > ----------------------------------
-         > ==>> """.trimMargin(">"))
+        >
+$magenta  ---    -Ø - Ø - Ø - Ø - Ø - Ø - Ø - Ø - Ø - Ø - Ø - Ø-$reset      
+$magenta /   \   $cyan|$reset                                             $cyan|$reset
+$magenta|_____|$reset  $cyan|$reset $bold   Note Menu$reset                                $cyan|$reset
+$cyan|     |$reset  $cyan|$reset                                             $cyan|$reset
+$cyan|  $bold!$reset  $cyan|$reset  $cyan|$reset   $magenta 1)$reset Add a note                            $cyan|$reset
+$cyan| $magenta$bold N$reset  $cyan|  |$reset   $magenta 2)$reset List all notes                        $cyan|$reset
+$cyan| $magenta$bold O$reset  $cyan|  |$reset   $magenta 3)$reset Search notes                          $cyan|$reset 
+$cyan| $magenta$bold T$reset  $cyan|  |$reset   $magenta 4)$reset Update a note                         $cyan|$reset
+$cyan| $magenta$bold E$reset  $cyan|  |$reset   $magenta 5)$reset Delete a note                         $cyan|$reset
+$cyan| $magenta$bold S$reset  $cyan|  |$reset   $magenta 6)$reset Archive a note                        $cyan|$reset
+$cyan|     |  |$reset   $magenta 7)$reset Mark note as completed                $cyan|$reset
+$cyan| $magenta$bold A$reset  $cyan|  |$reset   $magenta 8)$reset Save a note                           $cyan|$reset
+$cyan| $magenta$bold P$reset  $cyan|  |$reset   $magenta 9)$reset Load a note                           $cyan|$reset
+$cyan| $magenta$bold P$reset  $cyan|  |$reset                                             $cyan|$reset
+$cyan|  $cyan$bold!  |$reset  $cyan|$reset   $magenta 0)$reset Exit                                  $cyan|$reset
+$cyan|_____|$reset  $cyan|$reset                                             $cyan|$reset    
+$magenta\     / $reset $cyan|_____________________________________________|$reset
+$magenta \   / $reset  
+ $magenta \ / $reset   $magenta⬇$reset Enter option below $magenta⬇$reset 
+ >                 
+         >         $magenta==>>$reset """.trimMargin(">"))
+
 }
 fun runMenu() {
     do {
@@ -51,62 +70,107 @@ fun runMenu() {
             8  -> save()
             9  -> load()
             0  -> exitApp()
-            else -> println("Invalid option entered: ${option}")
+            else -> println("\n         Invalid option entered: ${option}\n")
         }
     } while (true)
 }
+
+//Add note
 fun addNote(){
     //logger.info { "addNote() function invoked" }
-    val noteTitle = readNextLine("Enter a title for the note: ")
-    val noteContents = readNextLine("Enter contents for the note: ")
-    val noteCategory = readValidCategory("Enter a category for the note from ${CategoryUtility.categories}: ")
-    val notePriority = readValidPriority("Enter note priority (1-low, 2, 3, 4, 5-high): ")
-    val noteProgress = readValidProgress("Enter note progress (To-do, doing, done): ")
+    val noteTitle = readNextLine("\n         Enter a title for the note: ")
+    val noteContents = readNextLine("         Enter contents for the note: ")
+    val noteCategory = readValidCategory("         Enter a category for the note from ${CategoryUtility.categories}: ")
+    val notePriority = readValidPriority("         Enter note priority (1-low, 2, 3, 4, 5-high): ")
+    val noteProgress = readValidProgress("         Enter note progress (To-do, doing, done): ")
     val isAdded = noteAPI.add(Note(noteTitle, noteContents, noteCategory, notePriority ,noteProgress, false, false))
 
     if (isAdded) {
-        println("Added Successfully")
+        println("\n         Note Added Successfully!\n")
     } else {
-        println("Add Failed")
+        println("\n         Add Failed\n")
     }
 }
-fun listNotes() {
-    if (noteAPI.numberOfNotes() > 0) {
-        val option = readNextInt(
-            """
-                  > --------------------------------
-                  > |   1) View ALL notes          |
-                  > |   2) View ACTIVE notes       |
-                  > |   3) View ARCHIVED notes     |
-                  > --------------------------------
-         > ==>> """.trimMargin(">"))
 
+//List notes
+fun listNotes() {
+
+    // displays the colour
+    val magenta = "\u001b[35m"
+    val cyan = "\u001b[36m"
+    // displays the decoration
+    val bold = "\u001b[1m"
+    // resets colour back to what it previously was
+    val reset = "\u001b[0m"
+
+    if (noteAPI.numberOfNotes() > 0) {
+        val option = readNextInt("""
+         >
+         >         $magenta-Ø - Ø - Ø - Ø - Ø - Ø - Ø - Ø - Ø - Ø - Ø - Ø-$reset
+         >         $cyan|$reset                                             $cyan|$reset
+         >         $cyan|$reset $bold  List Menu$reset                                 $cyan|
+         >         $cyan|$reset                                             $cyan|$reset
+         >         $cyan|$reset  $magenta 1)$reset View ALL notes                         $cyan|$reset
+         >         $cyan|$reset  $magenta 2)$reset View ACTIVE notes                      $cyan|$reset
+         >         $cyan|$reset  $magenta 3)$reset View ARCHIVED notes                    $cyan|$reset
+         >         $cyan|$reset  $magenta 4)$reset View COMPLETED notes                   $cyan|$reset
+         >         $cyan|$reset  $magenta 5)$reset View notes in alphabetical order       $cyan|$reset
+         >         $cyan|$reset  $magenta 6)$reset View notes of a specified priority     $cyan|$reset
+         >         $cyan|$reset  $magenta 7)$reset View notes of a specified progress     $cyan|$reset
+         >         $cyan|$reset                                             $cyan|$reset
+         >         $cyan|$reset  $magenta 0)$reset Return to notes menu                   $cyan|$reset
+         >         $cyan|$reset                                             $cyan|$reset
+         >         $cyan|_____________________________________________|$reset
+         >         
+         >         $magenta⬇$reset Enter option below $magenta⬇$reset 
+                
+         >         $magenta==>>$reset """.trimMargin(">"))
 
         when (option) {
             1 -> listAllNotes()
             2 -> listActiveNotes()
             3 -> listArchivedNotes()
             4 -> listCompletedNotes()
-            5 -> listBySelectedPriority()
-            6 -> listBySelectedProgress()
-            7 -> listActiveNotesInAlphabeticalOrder()
-            else -> println("Invalid option entered: " + option)
+            5 -> listActiveNotesInAlphabeticalOrder()
+            6 -> listBySelectedPriority()
+            7 -> listBySelectedProgress()
+            0  -> runMenu()
+            else -> println("\n         Invalid option entered: " + option)
         }
     } else {
-        println("Option Invalid - No notes stored")
+        println("\n         Option Invalid - No notes stored")
     }
 }
 
+//Search notes
 fun searchNotes() {
+
+    // displays the colour
+    val magenta = "\u001b[35m"
+    val cyan = "\u001b[36m"
+    // displays the decoration
+    val bold = "\u001b[1m"
+    // resets colour back to what it previously was
+    val reset = "\u001b[0m"
+
     if (noteAPI.numberOfNotes() > 0) {
-        val option = readNextInt(
-            """
-                  > ---------------------------------
-                  > |   1) Search notes by title    |
-                  > |   2) Search notes by Contents |
-                  > |   3) Search notes by Category |
-                  > ---------------------------------
-         > ==>> """.trimMargin(">"))
+        val option = readNextInt("""
+         >
+         >        $magenta-Ø - Ø - Ø - Ø - Ø - Ø - Ø - Ø - Ø - Ø - Ø - Ø-$reset
+         >        $cyan|$reset                                             $cyan|$reset
+         >        $cyan|$reset $bold  Search Menu$reset                               $cyan|$reset
+         >        $cyan|$reset                                             $cyan|$reset
+         >        $cyan|$reset  $magenta 1)$reset Search notes by title                  $cyan|$reset
+         >        $cyan|$reset  $magenta 2)$reset Search notes by contents               $cyan|$reset
+         >        $cyan|$reset  $magenta 3)$reset Search Notes by Category               $cyan|$reset
+         >        $cyan|$reset                                             $cyan|$reset
+         >        $cyan|$reset  $magenta 0)$reset Return to notes menu                   $cyan|$reset
+         >        $cyan|$reset                                             $cyan|$reset
+         >        $cyan|_____________________________________________|$reset
+         >         
+         >        $magenta⬇$reset Enter option below $magenta⬇$reset 
+                
+         >        $magenta==>>$reset """.trimMargin(">"))
 
 
         when (option) {
@@ -114,19 +178,45 @@ fun searchNotes() {
             1  -> searchNotesByTitle()
             2  -> searchNotesByContents()
             3  -> searchNotesByCategory()
-            else -> println("Invalid option entered: " + option)
+            0  -> runMenu()
+            else -> println("         Invalid option entered: \n" + option)
         }
     } else {
-        println("Option Invalid - No notes stored")
+        println("\n         Option Invalid - No notes stored\n")
     }
+}
+
+//List ALL notes
+fun listAllNotes() {
+    println(noteAPI.listAllNotes())
+}
+
+//List active notes
+fun listActiveNotes() {
+    println(noteAPI.listActiveNotes())
+}
+
+//List archived notes
+fun listArchivedNotes() {
+    println(noteAPI.listArchivedNotes())
+}
+
+//List completed notes
+fun listCompletedNotes() {
+    println(noteAPI.listCompletedNotes())
+}
+
+//List notes in alphabetical order of the title
+fun listActiveNotesInAlphabeticalOrder(){
+    println(noteAPI.listActiveNotesInAlphabeticalOrderOfTitle())
 }
 
 //List notes of the priority that was inputted
 fun listBySelectedPriority() {
-    val searchSelectedPriority = readNextInt("Enter the note priority to list: ")
+    val searchSelectedPriority = readNextInt("\n         Enter the note priority number to list: ")
     val searchResults = noteAPI.listNotesBySelectedPriority(searchSelectedPriority)
     if (searchResults.isEmpty()) {
-        println("No notes found")
+        println("\n         No notes found\n")
     } else {
         println(searchResults)
     }
@@ -134,128 +224,116 @@ fun listBySelectedPriority() {
 
 //List notes of the progress that was inputted
 fun listBySelectedProgress() {
-    val searchSelectedProgress = readNextLine("Enter the note progress to list: ")
+    val searchSelectedProgress = readNextLine("\n        Enter the note progress to list: ")
     val searchResults = noteAPI.listNotesBySelectedProgress(searchSelectedProgress)
     if (searchResults.isEmpty()) {
-        println("No notes found")
+        println("\n         No notes found\n")
     } else {
         println(searchResults)
     }
 }
 
-fun listActiveNotesInAlphabeticalOrder(){
-    println(noteAPI.listActiveNotesInAlphabeticalOrderOfTitle())
-}
-fun listAllNotes() {
-    println(noteAPI.listAllNotes())
-}
-
-fun listActiveNotes() {
-    println(noteAPI.listActiveNotes())
-}
-
-fun listArchivedNotes() {
-    println(noteAPI.listArchivedNotes())
-}
-
-fun listCompletedNotes() {
-    println(noteAPI.listCompletedNotes())
-}
-
+//Update a note
 fun updateNote() {
     //logger.info { "updateNotes() function invoked" }
-    listNotes()
+    listAllNotes()
     if (noteAPI.numberOfNotes() > 0) {
         //only ask the user to choose the note if notes exist
-        val indexToUpdate = readNextInt("Enter the index of the note to update: ")
+        val indexToUpdate = readNextInt("\n         Enter the number of the note to update: ")
         if (noteAPI.isValidIndex(indexToUpdate)) {
-            val noteTitle = readNextLine("Enter a title for the note: ")
-            val noteContents = readNextLine("Enter contents for the note: ")
-            val noteCategory = readValidCategory("Enter a category for the note from ${CategoryUtility.categories}: ")
-            val notePriority = readValidPriority("Enter note priority (1-low, 2, 3, 4, 5-high): ")
-            val noteProgress = readValidProgress("Enter note progress (To-do, doing, done): ")
+            val noteTitle = readNextLine("         Enter a title for the note: ")
+            val noteContents = readNextLine("         Enter contents for the note: ")
+            val noteCategory = readValidCategory("         Enter a category for the note from ${CategoryUtility.categories}: ")
+            val notePriority = readValidPriority("         Enter note priority (1-low, 2, 3, 4, 5-high): ")
+            val noteProgress = readValidProgress("         Enter note progress (To-do, doing, done): ")
 
             //pass the index of the note and the new note details to NoteAPI for updating and check for success.
             if (noteAPI.updateNote(indexToUpdate, Note(noteTitle, noteContents, noteCategory, notePriority, noteProgress, false, false))){
-                println("Update Successful")
+                println("\n         Update Successful!\n")
             } else {
-                println("Update Failed")
+                println("\n         Update Failed\n")
             }
         } else {
-            println("There are no notes for this index number")
+            println("\n         There are no notes for this number\n")
         }
     }
 }
 
-fun archiveNote() {
-    listNotes()
-    if (noteAPI.numberOfActiveNotes() > 0) {
-        // only ask the user to choose the note to archive if active notes exist
-        val indexToArchive = readNextInt("Enter the index of the note to archive: ")
-        // pass the index of the note to NoteAPI for archiving and check for success.
-        if (noteAPI.archiveNote(indexToArchive)) {
-            println("Archive Successful!")
-        } else {
-            println("Archive NOT Successful")
-        }
-    }
-}
-
-fun completeNote() {
-    listNotes()
-    if (noteAPI.numberOfCompletedNotes() > 0) {
-        // only ask the user to choose the note to archive if active notes exist
-        val indexToComplete = readNextInt("Enter the index of the note to mark as completed: ")
-        // pass the index of the note to NoteAPI for archiving and check for success.
-        if (noteAPI.completedNote(indexToComplete)) {
-            println("Completion Successful!")
-        } else {
-            println("Completion NOT Successful")
-        }
-    }
-}
-
+//Delete a note
 fun deleteNote(){
     //logger.info { "deleteNotes() function invoked" }
-    listNotes()
+    listAllNotes()
     if (noteAPI.numberOfNotes() > 0) {
         //only ask the user to choose the note to delete if notes exist
-        val indexToDelete = readNextInt("Enter the index of the note to delete: ")
+        val indexToDelete = readNextInt("\n         Enter the number of the note to delete: ")
         //pass the index of the note to NoteAPI for deleting and check for success.
         val noteToDelete = noteAPI.deleteNote(indexToDelete)
         if (noteToDelete != null) {
-            println("Delete Successful! Deleted note: ${noteToDelete.noteTitle}")
+            println("\n         Delete Successful! Deleted note: ${noteToDelete.noteTitle}\n")
         } else {
-            println("Delete NOT Successful")
+            println("\n         Delete NOT Successful\n")
         }
     }
 }
 
+//Archive a note
+fun archiveNote() {
+    listActiveNotes()
+    if (noteAPI.numberOfActiveNotes() > 0) {
+        // only ask the user to choose the note to archive if active notes exist
+        val indexToArchive = readNextInt("\n         Enter the number of the note to archive: ")
+        // pass the index of the note to NoteAPI for archiving and check for success.
+        if (noteAPI.archiveNote(indexToArchive)) {
+            println("\n         Archive Successful!\n")
+        } else {
+            println("\n         Archive NOT Successful\n")
+        }
+    }
+}
+
+//Mark a note as completed
+fun completeNote() {
+    listActiveNotes()
+    if (noteAPI.numberOfCompletedNotes() > 0) {
+        // only ask the user to choose the note to archive if active notes exist
+        val indexToComplete = readNextInt("\n         Enter the number of the note to mark as completed: ")
+        // pass the index of the note to NoteAPI for archiving and check for success.
+        if (noteAPI.completedNote(indexToComplete)) {
+            println("\n         Completion Successful!\n")
+        } else {
+            println("\n         Completion NOT Successful\n")
+        }
+    }
+}
+
+//Search notes by title
 fun searchNotesByTitle() {
-    val searchTitle = readNextLine("Enter the title to search by: ")
+    val searchTitle = readNextLine("\n         Enter the title to search by: ")
     val searchResults = noteAPI.searchByTitle(searchTitle)
     if (searchResults.isEmpty()) {
-        println("No notes found")
+        println("\n         No notes found\n")
     } else {
         println(searchResults)
     }
 }
 
+//Search notes by its contents
 fun searchNotesByContents() {
-    val searchTitle = readNextLine("Enter contents to search by: ")
+    val searchTitle = readNextLine("\n         Enter contents to search by: ")
     val searchResults = noteAPI.searchByContent(searchTitle)
     if (searchResults.isEmpty()) {
-        println("No notes found")
+        println("\n         No notes found\n")
     } else {
         println(searchResults)
     }
 }
 
+//Search notes by specific category
 fun searchNotesByCategory() {
-    val searchTitle = readNextLine("Enter the category to search by: ")
+    val searchTitle = readNextLine("\n         Enter the category to search by: ")
     val searchResults = noteAPI.searchByCategory(searchTitle)
     if (searchResults.isEmpty()) {
-        println("No notes found")
+        println("\n         No notes found\n")
     } else {
         println(searchResults)
     }
@@ -265,7 +343,7 @@ fun save() {
     try {
         noteAPI.store()
     } catch (e: Exception) {
-        System.err.println("Error writing to file: $e")
+        System.err.println("\n         Error writing to file: $e")
     }
 }
 
@@ -273,7 +351,7 @@ fun load() {
     try {
         noteAPI.load()
     } catch (e: Exception) {
-        System.err.println("Error reading from file: $e")
+        System.err.println("\n         Error reading from file: $e")
     }
 }
 
